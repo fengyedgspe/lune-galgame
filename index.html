@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23e05678'/%3E%3C/svg%3E">
 <style>
 :root{
-  --ink:#f2edf6;--muted:#b7a8c4;--rose:#e05678;--panel:rgba(10,8,16,.78);
+  --ink:#f2edf6;--muted:#b7a8c4;--rose:#e05678;--panel:rgba(10,8,16,.88);
   --line:rgba(224,86,120,.38);--bg:#0d0a14;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -26,31 +26,35 @@ img{user-select:none}
 
 /* ===== 舞台 ===== */
 .stage{position:fixed;inset:0;overflow:hidden}
-.scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%;opacity:0;transition:opacity .7s ease,filter .55s ease,transform .55s ease;pointer-events:none}
-.stage.has-sprite .scene{filter:blur(16px) brightness(.62) saturate(.92);transform:scale(1.12)}
+.scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%;opacity:0;transition:opacity .5s ease;pointer-events:none}
+.stage.has-sprite .scene.on{opacity:0}
+.stage.has-sprite .scene.blur.on{opacity:1}
+.stage::after{content:'';position:absolute;left:0;bottom:0;width:62%;height:42%;pointer-events:none;background:radial-gradient(ellipse at 36% 100%,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 68%);opacity:0;transition:opacity .45s ease;z-index:2}
+.stage.has-sprite::after{opacity:1}
 .scene.on{opacity:1}
+.scene.blur{opacity:0}
 .veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,8,16,.06) 0%,rgba(8,6,12,.5) 58%,rgba(6,4,10,.94) 100%)}
 .red{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 34%,rgba(120,20,40,0) 38%,rgba(120,20,45,.42) 100%);transition:opacity 1.1s ease}
 .stage.dark .red{opacity:1}
 
 /* ===== 立绘：等比缩放，桌面靠左、手机居中 ===== */
-.sprite{position:absolute;left:0;bottom:0;height:auto;width:auto;max-height:84%;max-width:none;opacity:0;transform:translateY(10px);transition:opacity .55s ease,transform .55s ease;pointer-events:none;filter:drop-shadow(0 14px 36px rgba(0,0,0,.55))}
+.sprite{position:absolute;left:2%;bottom:0;height:auto;width:auto;max-height:82%;max-width:none;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease;pointer-events:none;z-index:3}
 .sprite.show{opacity:1;transform:translateY(0)}
 
 /* ===== 顶部 HUD ===== */
-.hp{position:fixed;top:max(12px,env(safe-area-inset-top));right:64px;z-index:60;font-size:13px;letter-spacing:.12em;color:#ffd7e4;background:rgba(10,8,16,.5);border:1px solid var(--line);border-radius:20px;padding:7px 15px;backdrop-filter:blur(6px);display:none}
+.hp{position:fixed;top:max(12px,env(safe-area-inset-top));right:64px;z-index:60;font-size:13px;letter-spacing:.12em;color:#ffd7e4;background:rgba(10,8,16,.62);border:1px solid var(--line);border-radius:20px;padding:7px 15px;;display:none}
 .hp.show{display:block}
 .hp b{color:var(--rose)}
-.sound-btn{position:fixed;top:max(12px,env(safe-area-inset-top));right:12px;z-index:120;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(10,8,16,.58);color:#e9d6f2;backdrop-filter:blur(6px)}
+.sound-btn{position:fixed;top:max(12px,env(safe-area-inset-top));right:12px;z-index:120;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(10,8,16,.68);color:#e9d6f2;}
 .sound-btn svg{position:absolute;inset:0;margin:auto;width:20px;height:20px;fill:currentColor}
 .sound-btn .wav{opacity:0;transition:opacity .2s}
 .sound-btn.on{color:var(--rose);border-color:var(--rose)}
 .sound-btn.on .wav{opacity:1}
 
 /* ===== 名字 / 对话框 ===== */
-.nameplate{position:fixed;left:50%;transform:translateX(-50%);z-index:21;font-size:15px;letter-spacing:.35em;font-weight:700;color:#ffe6ef;background:var(--panel);border:1px solid var(--line);border-bottom:0;padding:7px 22px;border-radius:10px 10px 0 0;backdrop-filter:blur(8px);display:none;bottom:150px}
+.nameplate{position:fixed;left:50%;transform:translateX(-50%);z-index:21;font-size:15px;letter-spacing:.35em;font-weight:700;color:#ffe6ef;background:var(--panel);border:1px solid var(--line);border-bottom:0;padding:7px 22px;border-radius:10px 10px 0 0;;display:none;bottom:150px}
 .nameplate.show{display:block}
-.dialogue{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;width:min(92%,900px);min-height:112px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px 22px;backdrop-filter:blur(10px);box-shadow:0 10px 44px rgba(0,0,0,.42);cursor:pointer}
+.dialogue{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;width:min(92%,900px);min-height:112px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px 22px;;box-shadow:0 10px 44px rgba(0,0,0,.42);cursor:pointer}
 #text{font-size:18px;line-height:1.75;letter-spacing:.03em;white-space:pre-line;min-height:3.2em;text-align:left}
 .cont{position:absolute;right:16px;bottom:9px;font-size:11px;color:var(--rose);letter-spacing:.28em;opacity:0;transition:opacity .3s}
 .cont.show{opacity:1;animation:blink 1.4s ease-in-out infinite}
@@ -63,7 +67,7 @@ img{user-select:none}
 .choice:hover,.choice:focus-visible{background:rgba(224,86,120,.2);border-color:var(--rose);outline:none}
 
 /* ===== 提示 ===== */
-.tip{position:fixed;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:40;background:rgba(10,8,16,.55);border:1px solid var(--line);color:#e9d6f2;font-size:12px;letter-spacing:.18em;padding:7px 15px;border-radius:20px;opacity:0;transition:opacity .35s;pointer-events:none;backdrop-filter:blur(6px)}
+.tip{position:fixed;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:40;background:rgba(10,8,16,.66);border:1px solid var(--line);color:#e9d6f2;font-size:12px;letter-spacing:.18em;padding:7px 15px;border-radius:20px;opacity:0;transition:opacity .35s;pointer-events:none;}
 .tip.show{opacity:1}
 
 /* ===== 标题 ===== */
@@ -88,9 +92,12 @@ img{user-select:none}
 .endcard p{font-size:15px;line-height:1.95;color:#e8d9ef;white-space:pre-line}
 .endbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
 
+/* ===== 结局模式：隐藏游戏 HUD/对话框 ===== */
+.ending-mode .dialogue,.ending-mode .nameplate,.ending-mode .choices,.ending-mode .tip,.ending-mode .hp,.ending-mode .hud-btn,.ending-mode .sound-btn{opacity:0;pointer-events:none;transition:opacity .35s ease}
+
 /* ===== 标题背景 / 后日谈 / 回看选项 ===== */
-.title-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:blur(26px) brightness(.5) saturate(.85);transform:scale(1.12);opacity:.8;z-index:0;pointer-events:none}
-.title-shade{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 32%,rgba(20,12,30,.18) 0%,rgba(6,4,10,.9) 78%)}
+.title-bg{position:absolute;inset:0;background:url(assets/title_bg_blur.jpg) center 30%/cover no-repeat;opacity:1;z-index:0;pointer-events:none}
+.title-shade{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 32%,rgba(20,12,30,.12) 0%,rgba(6,4,10,.8) 82%)}
 .title > :not(.title-bg):not(.title-shade){position:relative;z-index:1}
 .title::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(2px 2px at 18% 24%,rgba(255,214,232,.55),transparent 60%),radial-gradient(2px 2px at 72% 18%,rgba(255,214,232,.4),transparent 60%),radial-gradient(2px 2px at 84% 62%,rgba(255,214,232,.45),transparent 60%),radial-gradient(2px 2px at 32% 74%,rgba(255,214,232,.35),transparent 60%),radial-gradient(1.5px 1.5px at 55% 42%,rgba(255,214,232,.5),transparent 60%);animation:twinkle 9s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.3}50%{opacity:.95}}
@@ -101,7 +108,7 @@ img{user-select:none}
 
 /* ===== 菜单 / 弹层 ===== */
 .hp{right:116px}
-.hud-btn{position:fixed;top:max(12px,env(safe-area-inset-top));right:64px;z-index:120;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(10,8,16,.58);color:#e9d6f2;backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;cursor:pointer}
+.hud-btn{position:fixed;top:max(12px,env(safe-area-inset-top));right:64px;z-index:120;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(10,8,16,.68);color:#e9d6f2;;display:none;align-items:center;justify-content:center;cursor:pointer}
 .hud-btn.show{display:flex}
 .hud-btn svg{width:20px;height:20px;fill:currentColor}
 .hud-btn.auto{border-color:var(--rose);color:var(--rose)}
@@ -138,7 +145,7 @@ img{user-select:none}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .title h1{animation:floaty 6s ease-in-out infinite}
 @media (max-width:640px){
-  .title-bg{filter:blur(18px) brightness(.55) saturate(.85);transform:scale(1.08)}
+  .title-bg{background-position:center 28%}
   .hp{right:104px}
   .hud-btn{right:58px;width:40px;height:40px}
   .sound-btn{right:10px;width:40px;height:40px;top:max(12px,env(safe-area-inset-top))}
@@ -150,9 +157,9 @@ img{user-select:none}
 
 /* ===== 响应式 ===== */
 @media (max-width:640px){
-  .sprite{height:54vh;width:96vw;max-height:none;max-width:none;object-fit:cover;object-position:70% bottom;left:50%;transform:translateX(-50%) translateY(10px)}
+  .sprite{height:50vh;width:94vw;max-height:none;max-width:none;object-fit:cover;object-position:68% bottom;left:50%;transform:translateX(-50%) translateY(10px)}
   .sprite.show{transform:translateX(-50%) translateY(0)}
-  #spriteW{object-position:50% top}
+  #spriteW{height:46vh;object-position:50% 15%}
 }
   #text{font-size:16.5px}
   .dialogue{min-height:104px;padding:13px 16px 20px;border-radius:12px}
@@ -160,7 +167,7 @@ img{user-select:none}
   .btn{min-width:200px}
 }
 @media (max-height:520px){
-  .sprite{max-height:96%;max-width:52%}
+  .sprite{max-height:92%;max-width:52%;left:1%}
   .dialogue{min-height:86px;padding:10px 14px 16px}
   #text{font-size:16px;min-height:2.6em}
   .choices{max-height:66vh}
@@ -174,6 +181,8 @@ img{user-select:none}
   <div class="stage" id="stage">
     <img class="scene" id="sc1" src="assets/scene_clean.jpg" alt="">
     <img class="scene" id="sc2" src="assets/scene2.jpg" alt="">
+    <img class="scene blur" id="sc1b" src="assets/scene_clean_blur.jpg" alt="">
+    <img class="scene blur" id="sc2b" src="assets/scene2_blur.jpg" alt="">
     <div class="veil"></div>
     <div class="red"></div>
     <img class="sprite" id="spriteS" src="assets/f_smile.png" alt="綾Lune">
@@ -192,7 +201,7 @@ img{user-select:none}
   <div class="tip" id="tip">点 击 推 进 剧 情</div>
 
   <div class="title" id="title">
-    <img class="title-bg" src="assets/scene_clean.jpg" alt="">
+    <div class="title-bg" aria-hidden="true"></div>
     <div class="title-shade"></div>
     <div class="sub">—— 直 播 间 的 秘 密 ——</div>
     <h1>綾Lune</h1>
@@ -311,7 +320,7 @@ img{user-select:none}
   var KEY = 'lune_galgame_v3_auto';
   var SKEY = 'lune_galgame_v2_sound';
   var $ = function (id) { return document.getElementById(id); };
-  var stage = $('stage'), sc1 = $('sc1'), sc2 = $('sc2'),
+  var stage = $('stage'), sc1 = $('sc1'), sc2 = $('sc2'), sc1b = $('sc1b'), sc2b = $('sc2b'),
       spriteS = $('spriteS'), spriteW = $('spriteW'),
       hpEl = $('hp'), hpValue = $('hpValue'), nameplate = $('nameplate'),
       dialogue = $('dialogue'), textEl = $('text'), cont = $('cont'),
@@ -407,7 +416,7 @@ img{user-select:none}
   });
 
   /* ================= 渲染 ================= */
-  function setScene(n) { sc1.classList.toggle('on', n === 1); sc2.classList.toggle('on', n === 2); }
+  function setScene(n) { sc1.classList.toggle('on', n === 1); sc2.classList.toggle('on', n === 2); sc1b.classList.toggle('on', n === 1); sc2b.classList.toggle('on', n === 2); }
   function hideSprites() { spriteS.classList.remove('show'); spriteW.classList.remove('show'); stage.classList.remove('has-sprite'); }
   function setStorySprite(spr) { hideSprites(); if (spr === 1) { spriteS.classList.add('show'); stage.classList.add('has-sprite'); } }
   function setEndingSprite(spr) { hideSprites(); if (spr === 1) spriteW.classList.add('show'); else spriteS.classList.add('show'); stage.classList.add('has-sprite'); }
@@ -620,6 +629,7 @@ img{user-select:none}
       btnAfter.textContent = '后 日 谈';
       btnAfter.style.display = e.epilogue ? '' : 'none';
       endingEl.classList.add('show');
+      document.body.classList.add('ending-mode');
       state.ended = true; state.transitioning = false; gameActive = false;
       menuBtn.classList.remove('show');
       unlockEnding(e.key);
@@ -674,6 +684,7 @@ img{user-select:none}
     textEl.textContent = '';
   }
   function newGame() {
+    document.body.classList.remove('ending-mode');
     state = { node: 'start', hp: 0, route: null, ended: false, choosing: false, typing: false, transitioning: false };
     history = [];
     try { localStorage.removeItem(KEY); } catch (e) {}
@@ -688,6 +699,7 @@ img{user-select:none}
     renderNode();
   }
   function continueGame() {
+    document.body.classList.remove('ending-mode');
     var sv = loadSave();
     if (!sv) { newGame(); return; }
     state = { node: sv.node, hp: sv.hp || 0, route: sv.route || null, ended: !!sv.ended, choosing: false, typing: false, transitioning: false };
@@ -700,6 +712,7 @@ img{user-select:none}
     renderNode();
   }
   function returnToTitle(clearSave) {
+    document.body.classList.remove('ending-mode');
     if (clearSave) { try { localStorage.removeItem(KEY); } catch (e) {} }
     state = { node: 'start', hp: 0, route: null, ended: false, choosing: false, typing: false, transitioning: false };
     gameActive = false;
