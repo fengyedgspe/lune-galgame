@@ -155,6 +155,50 @@ img{user-select:none}
   .setting input[type=range]{width:120px}
 }
 
+/* ===== 桌面大屏（≥1100px）：整体放大一档 ===== */
+@media (min-width:1100px){
+  .dialogue{width:min(94%,1000px);min-height:134px;padding:20px 26px 28px;border-radius:16px}
+  #text{font-size:20px;line-height:1.8;letter-spacing:.035em;min-height:3.3em}
+  .cont{font-size:12px;right:20px;bottom:11px}
+  .nameplate{font-size:17px;padding:9px 26px;letter-spacing:.4em;border-radius:12px 12px 0 0}
+  .choices{width:min(94%,840px);gap:12px}
+  .choice{font-size:17px;min-height:58px;padding:16px 22px;border-radius:13px}
+  .title h1{font-size:40px}
+  .title .sub{font-size:14px;letter-spacing:.5em}
+  .title .menu{gap:14px}
+  .title .btn{min-width:288px;padding:17px 44px;font-size:18px;letter-spacing:.24em;border-radius:14px}
+  .title .btn.small{min-width:236px;padding:13px 30px;font-size:15px;letter-spacing:.14em}
+  .title .foot{font-size:12px}
+  .title .progress{font-size:12px}
+  .hud-btn,.sound-btn{width:48px;height:48px}
+  .hud-btn svg,.sound-btn svg{width:22px;height:22px}
+  .sound-btn{right:14px}
+  .hud-btn{right:72px}
+  .hp{right:130px;font-size:14px;padding:9px 18px}
+  .tip{font-size:13px;padding:8px 18px}
+  .panel{width:min(92vw,620px);padding:28px 30px 22px;border-radius:18px}
+  .panel h3{font-size:19px;letter-spacing:.34em;margin-bottom:20px}
+  .menu-grid .row .btn{font-size:15px;padding:14px 10px;min-height:52px}
+  .setting{font-size:14px}
+  .setting select{font-size:14px;padding:8px 10px;min-width:150px}
+  .setting input[type=range]{width:180px}
+  .slot{padding:15px 18px}
+  .slot b{font-size:15px}
+  .slot span{font-size:13px}
+  .hist-line p{font-size:15px;line-height:1.8}
+  .hist-line b{font-size:13px}
+  .hist-list{gap:14px}
+  .endcard{max-width:min(94%,620px);padding:36px 34px 30px}
+  .endcard .tag{font-size:13px}
+  .endcard h2{font-size:30px}
+  .endcard p{font-size:16px;line-height:2}
+  .epilogue{font-size:15px;line-height:2}
+  .endcollect{font-size:12px}
+  .endbtns{margin-top:26px;gap:14px}
+  .endbtns .btn{min-width:200px}
+  .toast{font-size:14px;padding:10px 20px}
+}
+
 /* ===== 响应式 ===== */
 @media (max-width:640px){
   .sprite{height:50vh;width:94vw;max-height:none;max-width:none;object-fit:cover;object-position:68% bottom;left:50%;transform:translateX(-50%) translateY(10px)}
