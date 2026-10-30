@@ -398,6 +398,10 @@ img{user-select:none}
     tip.textContent = s; tip.classList.add('show');
     clearTimeout(tip._t); tip._t = setTimeout(function () { tip.classList.remove('show'); }, 2600);
   }
+  function showHint(s) {
+    tip.textContent = s; tip.classList.add('show');
+    clearTimeout(tip._t);
+  }
 
   function layoutUI() {
     var dh = dialogue.getBoundingClientRect();
@@ -488,7 +492,7 @@ img{user-select:none}
     if (node.scene) setScene(node.scene);
     setStorySprite(typeof node.spr === 'number' ? node.spr : 1);
     stage.classList.toggle('dark', !!node.dark);
-    setNameplate(node.who || '');
+    setNameplate(node.who && String(node.text || '').trim().charAt(0) === '「' ? node.who : '');
     hpShow(); hpRender();
     els_cont_reset();
     var myId = state.node;
@@ -509,6 +513,7 @@ img{user-select:none}
   function advance() {
     if (modalOpen) return;
     cancelAuto();
+    if (tip.classList.contains('show')) { clearTimeout(tip._t); tip.classList.remove('show'); }
     if (state.ended || state.transitioning) return;
     if (state.typing) { finishTyping(); return; }
     if (state.choosing) return;
@@ -629,7 +634,7 @@ img{user-select:none}
     try { localStorage.removeItem(KEY); } catch (e) {}
     closeModals();
     beginGame();
-    flashTip('点击推进剧情');
+    showHint('点击推进剧情');
   }
   function beginGame() {
     resetUiForGame();
@@ -646,6 +651,7 @@ img{user-select:none}
     resetUiForGame();
     hideTitle();
     gameActive = !state.ended;
+    showHint('点击推进剧情');
     renderNode();
   }
   function returnToTitle(clearSave) {
