@@ -56,6 +56,8 @@ img{user-select:none}
 /* ===== 名字 / 对话框 ===== */
 .nameplate{position:fixed;left:50%;transform:translateX(-50%);z-index:21;font-size:15px;letter-spacing:.35em;font-weight:700;color:#ffe6ef;background:var(--panel);border:1px solid var(--line);border-bottom:0;padding:7px 22px;border-radius:10px 10px 0 0;;display:none;bottom:150px}
 .nameplate.show{display:block}
+#dialogue:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:14px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .dialogue{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;width:min(92%,900px);min-height:112px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 20px 22px;;box-shadow:0 10px 44px rgba(0,0,0,.42);cursor:pointer}
 #text{font-size:18px;line-height:1.75;letter-spacing:.03em;white-space:pre-line;min-height:3.2em;text-align:left}
 .cont{position:absolute;right:16px;bottom:9px;font-size:11px;color:var(--rose);letter-spacing:.28em;opacity:0;transition:opacity .3s}
@@ -95,7 +97,7 @@ img{user-select:none}
 .endbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
 
 /* ===== 结局模式：隐藏游戏 HUD/对话框 ===== */
-.ending-mode .dialogue,.ending-mode .nameplate,.ending-mode .choices,.ending-mode .tip,.ending-mode .hp,.ending-mode .hud-btn,.ending-mode .sound-btn{opacity:0;pointer-events:none;transition:opacity .35s ease}
+.ending-mode .dialogue,.ending-mode .nameplate,.ending-mode .choices,.ending-mode .tip,.ending-mode .hp,.ending-mode .hud-btn{opacity:0;pointer-events:none;transition:opacity .35s ease}
 
 /* ===== 标题背景 / 后日谈 / 回看选项 ===== */
 .title-bg{position:absolute;inset:0;background:url(assets/title_bg_blur.jpg) center 30%/cover no-repeat;opacity:1;z-index:0;pointer-events:none}
@@ -269,9 +271,10 @@ img{user-select:none}
   </button>
   <div class="nameplate" id="nameplate">綾Lune</div>
   <div class="dialogue" id="dialogue" role="button" tabindex="0" aria-label="点击推进剧情">
-    <p id="text" aria-live="polite"></p><span class="cont" id="cont">▼</span>
+    <p id="text" aria-live="off"></p><span class="cont" id="cont">▼</span>
   </div>
   <div class="choices" id="choices" aria-label="选择"></div>
+  <div class="sr-only" id="srLive" aria-live="polite" role="status"></div>
   <div class="tip" id="tip">点 击 推 进 剧 情</div>
 
   <div class="title" id="title">
@@ -369,7 +372,7 @@ img{user-select:none}
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script id="story-data" type="application/json">[{"id":"start","scene":1,"spr":0,"who":"","text":"深夜十一点半，一条冷门的直播推荐把你带进了一个只有三十几个人的直播间。\n画面里，银发的女孩抱着麦克风，一只黑蝙蝠趴在她肩头，懒洋洋地打了个哈欠。","next":"open2"},{"id":"open2","scene":1,"spr":0,"who":"","text":"她唱完最后一句，尾音在安静的房间里飘了一会儿才落下。补光灯把她的睫毛照得很长，弹幕稀稀拉拉地滚过去。","next":"open3"},{"id":"open3","scene":1,"spr":1,"who":"綾Lune","text":"「晚上好呀……今天也有人陪我呢，阿里嘎多。」她把麦克风往怀里收了收，笑起来的时候，声音软软的。","next":"open4"},{"id":"open4","scene":1,"spr":1,"who":"綾Lune","text":"「弹幕我看看哦——」她低头凑近屏幕，忽然顿住，「呀，这个ID，我好像见过你诶。」","next":"open5"},{"id":"open5","scene":1,"spr":0,"who":"","text":"她歪了歪头，肩上的黑蝙蝠也跟着歪了歪脑袋。\n你握着手机，心跳莫名漏了一拍——她怎么会记得你？","next":"open6"},{"id":"open6","scene":1,"spr":0,"who":"","text":"弹幕里没有一个人接话。她却还保持着那个姿势，眼睛一眨不眨地看着镜头，像在等你说点什么。","next":"c1"},{"id":"c1","scene":1,"spr":1,"who":"綾Lune","text":"「那个……」她托着腮，耳朵尖有点红，「要不要，先跟主播说句话呀？就一句，也可以的哦。」","choices":[{"text":"在弹幕里跟她打招呼","hp":2,"next":"c1_a1"},{"text":"默默潜水，把这首听完","hp":0,"next":"c1_b1"}]},{"id":"c1_a1","scene":1,"spr":0,"who":"","text":"你敲下一行\"晚上好，刚才那首歌很好听\"，按下发送。弹幕轻飘飘地滚过去，她却一眼就看见了。","next":"c1_a2"},{"id":"c1_a2","scene":1,"spr":1,"who":"綾Lune","text":"「哇——被夸啦！」她双手合十，笑得眼睛都弯了，「谢谢宝宝，阿里嘎多。今天没白唱呢，哈哈。」","next":"join1"},{"id":"c1_b1","scene":1,"spr":0,"who":"","text":"你把输入框里的字一个个删掉，只把音量调大了一格。\n屏幕那头，她继续唱，唱着唱着，声音忽然轻了一点。","next":"c1_b2"},{"id":"c1_b2","scene":1,"spr":1,"who":"綾Lune","text":"「今天有位观众，从头陪到尾呢。」她对着镜头笑，眼睛弯成月牙，「虽然没说话，但我看见啦。谢谢呀，下次也要来哦。」","next":"join1"},{"id":"join1","scene":1,"spr":0,"who":"","text":"下播前十分钟，她把椅子往前挪了挪，说想再念一遍弹幕。","next":"bridge1"},{"id":"bridge1","scene":1,"spr":1,"who":"綾Lune","text":"「最后再唱一首吧。你们点——」她顿了顿，伸出食指晃了晃，「不过只准点我唱得好的那几首哦，不许刁难主播。」","next":"c2"},{"id":"c2","scene":1,"spr":1,"who":"綾Lune","text":"「来嘛，宝宝，点一首呀。」她抱着麦克风，眼睛亮亮地盯着屏幕，「今天想听什么？」","choices":[{"text":"接她的梗，跟她聊起来","hp":3,"next":"c2_a1"},{"text":"认真夸她，说转音特别好听","hp":2,"next":"c2_b1"},{"text":"打趣：来都来了，投个币呗","hp":1,"next":"c2_c1"}]},{"id":"c2_a1","scene":1,"spr":0,"who":"","text":"你回了一句玩笑：\"那就点一首你唱跑调的。\"\n弹幕瞬间炸开，一排\"哈哈哈哈\"刷了满屏。","next":"c2_a2"},{"id":"c2_a2","scene":1,"spr":1,"who":"綾Lune","text":"「天呐！你、你怎么知道我会跑调呀——」她捂着嘴笑得肩膀发抖，好半天才缓过来，「呜呜，被宝宝抓到把柄啦。」","next":"c2_a3"},{"id":"c2_a3","scene":1,"spr":1,"who":"綾Lune","text":"「不行，这个仇我记下了呢。」她清了清嗓子，故意把第一个音唱歪，然后自己先笑场。\n那半分钟，直播间好像一下子暖了起来。","next":"join2"},{"id":"c2_b1","scene":1,"spr":0,"who":"","text":"你没接梗，只认认真真打下一行字：\"刚才那首，转音的地方特别好听。\"","next":"c2_b2"},{"id":"c2_b2","scene":1,"spr":1,"who":"綾Lune","text":"她盯着那行字看了两秒，耳朵慢慢红了。「……阿里嘎多。」她低头拨了拨琴弦，声音轻下来，「你听得真仔细呢。」","next":"join2"},{"id":"c2_c1","scene":1,"spr":0,"who":"","text":"你半开玩笑地打字：\"主播，来都来了，投个币能点歌吗？\"\n她先是假装板起脸，眉毛都竖起来了。","next":"c2_c2"},{"id":"c2_c2","scene":1,"spr":1,"who":"綾Lune","text":"「哈哈哈，你倒是会做生意呀。」她鼓了鼓腮帮，还是没绷住笑，「行吧，这位老板，这首送你——记得常来哦。」","next":"join2"},{"id":"join2","scene":1,"spr":1,"who":"綾Lune","text":"「好啦，今天的直播就到这里。」她关掉伴奏，冲镜头挥挥手，「晚安呀，宝宝们。」","next":"msg1"},{"id":"msg1","scene":2,"spr":0,"who":"","text":"下播后，你正准备关掉手机，私信栏忽然跳出一个红点。\n头像是一轮细细的月亮。","next":"msg2"},{"id":"msg2","scene":2,"spr":0,"who":"","text":"是綾Lune：「今天谢谢你呀，还没睡吗？」","next":"msg3"},{"id":"msg3","scene":2,"spr":1,"who":"綾Lune","text":"你回了句\"睡不着\"。对面几乎秒回：「那正好，我也睡不着呢。陪我说说话，好不好？」","next":"c3"},{"id":"c3","scene":2,"spr":1,"who":"綾Lune","text":"「我啊……其实每天下播都睡不着呢。」她发来一条语音，背景里只有很轻的电流声，「灯一关，房间就好安静好安静，安静得吓人。」","choices":[{"text":"温柔地接住她的每一句话","hp":4,"next":"c3_a1"},{"text":"适当保持一点距离","hp":1,"next":"c3_b1"},{"text":"略带暧昧地试探一句","hp":3,"next":"c3_c1"}]},{"id":"c3_a1","scene":2,"spr":0,"who":"","text":"你一句一句地回她。她说直播间的压力，说那些没人听她唱歌的晚上，说肩头那只叫\"小蝠\"的黑蝙蝠。","next":"c3_a2"},{"id":"c3_a2","scene":2,"spr":1,"who":"綾Lune","text":"「其实我不太敢跟别人说这些的。」她打字打得很慢，「但是跟你说，好像没关系呢。」","next":"c3_a3"},{"id":"c3_a3","scene":2,"spr":1,"who":"綾Lune","text":"过了很久，她发来一句：「……你真好。」\n隔了几秒，又补上一句：「要是你能一直听我说话，就好了。」","next":"join3"},{"id":"c3_b1","scene":2,"spr":0,"who":"","text":"你回得不快不慢，斟酌着每一句话，连\"早点休息\"都写得客客气气。","next":"c3_b2"},{"id":"c3_b2","scene":2,"spr":1,"who":"綾Lune","text":"「……好呀，那不打扰你啦。」她回得很快，快得像是早就准备好了这句话。\n那个红点安静下去，像一盏被人关掉的灯。","next":"join3"},{"id":"c3_c1","scene":2,"spr":0,"who":"","text":"你半开玩笑地问：\"那我算不算你的特别观众？\"\n输入框上方\"对方正在输入\"亮了又灭，灭了又亮。","next":"c3_c2"},{"id":"c3_c2","scene":2,"spr":1,"who":"綾Lune","text":"「别、别撩我呀……」她发来一个慌乱的系统表情。\n过了一会儿，又补上一句：「……不过，我不讨厌呢。」","next":"join3"},{"id":"join3","scene":2,"spr":0,"who":"","text":"那天之后，你开始留意她开播的时间。\n像是有一根很细的线，把深夜的两端连在了一起。","next":"daily1"},{"id":"daily1","scene":1,"spr":1,"who":"","text":"之后的几个晚上，你几乎都准时出现。\n她开始在开播前给你发一句：「今天也来吗？」","next":"daily2"},{"id":"daily2","scene":2,"spr":1,"who":"綾Lune","text":"「要是哪天你没来……」某次下播后，她忽然说，「我可能会对着空直播间，唱一整晚呢。」\n她说完自己先笑了，但你看得出来，她不是在开玩笑。","next":"d0"},{"id":"d0","scene":2,"spr":0,"who":"","text":"几天后，她发来一条直播预告：周末想找个人连麦，一起唱几首歌。","next":"d1"},{"id":"d1","scene":1,"spr":0,"who":"","text":"到了那晚，直播间的人比平时多得多。弹幕刷得飞快，她却一条也没有念。","next":"d1b"},{"id":"d1b","scene":1,"spr":0,"who":"","text":"你在私信里看见她发来两个字：「你来吗？」后面跟着一个小小的月亮表情。","next":"d2"},{"id":"d2","scene":1,"spr":1,"who":"綾Lune","text":"「不着急哦，我等你。」她嘴上这么说，尾音却越拖越短，「要是……你不想来，也没关系的啦。」","next":"c4"},{"id":"c4","scene":1,"spr":1,"who":"綾Lune","text":"屏幕上，连麦的邀请框亮着。她安静地坐在镜头前，手指一下一下地敲着桌面。","choices":[{"text":"答应，为她准备一下","hp":3,"next":"c4_a1"},{"text":"有点犹豫，婉拒了","hp":1,"next":"c4_b1"}]},{"id":"c4_a1","scene":1,"spr":0,"who":"","text":"你答应下来，翻出她唱过的所有歌单，把最喜欢的那几首悄悄练了一遍。","next":"c4_a2"},{"id":"c4_a2","scene":1,"spr":1,"who":"綾Lune","text":"连麦那晚，她唱了一首很温柔的歌给你听。\n结束后她小声问：「下次……还能找你吗？」你说可以，她笑得像偷偷藏了颗糖。","next":"join4"},{"id":"c4_b1","scene":1,"spr":0,"who":"","text":"你回了句\"那天可能有事\"，她的\"正在输入\"亮了很久，最后只发来一句「嗯，我懂的。」","next":"c4_b2"},{"id":"c4_b2","scene":1,"spr":0,"who":"","text":"那晚的连麦，她一个人唱到了最后。\n下播后，她给你发消息的次数，明显少了一些。","next":"join4"},{"id":"join4","scene":1,"spr":0,"who":"","text":"转折发生在一个很平常的晚上。","next":"post1"},{"id":"post1","scene":2,"spr":1,"who":"","text":"连麦之后，她给你寄来一张明信片。背面是手写的地址，和一句话：「谢谢你来听我唱歌。」\n邮戳上的日期，是你第一次进她直播间的那个星期。","next":"post2"},{"id":"post2","scene":2,"spr":1,"who":"綾Lune","text":"「收到啦？」当晚她私信你，语气装作不在意，「……别笑我字丑哦。我还画了一只小蝠，你认出来没有？」","next":"e1"},{"id":"e1","scene":1,"spr":0,"who":"","text":"你在她的弹幕里随口提了一句别的主播的名字，说那边也在唱歌，\"还挺好听的\"。","next":"e1b"},{"id":"e1b","scene":1,"spr":0,"who":"","text":"弹幕里有人跟着起哄，说\"别家确实更好听\"。她握着麦克风的手，停在了半空。","next":"e2"},{"id":"e2","scene":1,"spr":0,"who":"","text":"弹幕区安静了三秒。\n她低头调了调麦克风，指节在灯光下泛着白。","next":"e3"},{"id":"e3","scene":1,"spr":1,"who":"綾Lune","text":"「……这样啊。」她笑了一下，没有接话，唱完了整首歌。\n声音比平时低了很多。","next":"c5"},{"id":"c5","scene":2,"spr":1,"who":"綾Lune","text":"下播后，她私信你：「你……喜欢看别人的直播吗？」\n句尾没有语气词。那条消息的\"正在输入\"，删删改改了很久。","choices":[{"text":"顺着她，赶紧道歉哄她","hp":3,"next":"c5_a1"},{"text":"觉得气氛不对，想拉开距离","hp":1,"next":"c5_b1"},{"text":"冷静地讲道理：观众是自由的","hp":0,"next":"c5_c1"}]},{"id":"c5_a1","scene":2,"spr":0,"who":"","text":"你立刻道歉，说只是随口一提，屏幕这边你只看着她一个人。","next":"c5_a2"},{"id":"c5_a2","scene":2,"spr":1,"who":"綾Lune","text":"她闷了很久，才回：「……我不许你看别人。」\n过了一会儿又软下来，「只准看我，好不好呀？我、我会一直唱给你听的。」","next":"join5"},{"id":"c5_b1","scene":2,"spr":0,"who":"","text":"你回了句\"别想太多，我只听歌\"，然后把手机扣在桌上。","next":"c5_b2"},{"id":"c5_b2","scene":2,"spr":1,"who":"綾Lune","text":"她安静了很久，久到你以为她睡了，才等来一句：「……好，我知道了。」\n那之后她照常开播，只是不再喊你的ID，也不再主动私信你。","next":"join5"},{"id":"c5_c1","scene":2,"spr":0,"who":"","text":"你认真解释，喜欢听谁唱歌是你的自由，希望她不要多想。","next":"c5_c2"},{"id":"c5_c2","scene":2,"spr":1,"who":"綾Lune","text":"她只回了一个「嗯」。\n可那之后，她的直播间在深夜还亮着灯，却不再喊你的ID了。","next":"join5"},{"id":"join5","scene":1,"spr":0,"who":"","text":"又一场深夜直播。这一次，她没有唱歌。","next":"f1"},{"id":"f1","scene":2,"spr":0,"who":"","text":"下播后，她发来一条语音：「……能留一下吗？我有话想说。」","next":"f2"},{"id":"f2","scene":2,"spr":1,"who":"綾Lune","text":"语音的背景音里，那只黑蝙蝠轻轻叫了一声。「我大概知道，这样不对呢。」她顿了顿。","next":"f3"},{"id":"f3","scene":2,"spr":1,"who":"綾Lune","text":"「可是我一想到你在别人的直播间里，我就……我就唱不下去呀。」她吸了吸鼻子，「对不起，我是不是很奇怪？」","next":"c6"},{"id":"c6","scene":2,"spr":1,"who":"綾Lune","text":"「那你呢？」她沉默了很久，声音轻得像怕惊动什么，「你要怎么选。」","choices":[{"text":"把心意说开，认真面对她","hp":0,"route":"talk","next":"route_talk_1"},{"text":"答应她：以后只来你的直播间","hp":0,"route":"stay","next":"route_stay_1"},{"text":"说一句抱歉，然后退出这场纠缠","hp":0,"route":"flee","next":"route_flee_1"}]},{"id":"route_talk_1","scene":2,"spr":0,"who":"","text":"你深吸一口气，把藏了很久的话一句一句说出口。\n屏幕那头安静得能听见电流的细响。","next":"route_talk_2"},{"id":"route_talk_2","scene":2,"spr":1,"who":"綾Lune","text":"「……你说真的呀？」她的声音有一点发抖，\n「我、我一直以为，只有我一个人在偷偷喜欢呢。」\n她顿了顿，又轻轻补了一句：「这次……换我先说，好不好？」","next":"__ending__"},{"id":"route_stay_1","scene":2,"spr":0,"who":"","text":"你说，以后只来她的直播间。\n她愣了很长一会儿，然后终于笑起来，眼睛弯弯的。","next":"route_stay_2"},{"id":"route_stay_2","scene":2,"spr":1,"who":"綾Lune","text":"「那说好了哦。」她伸出小指，对着镜头晃了晃，\n「拉钩。骗人的话……我会难过的呀。」\n直播结束后，她把拉过钩的那只手贴在胸口，很久都没有放下。","next":"__ending__"},{"id":"route_flee_1","scene":2,"spr":0,"who":"","text":"你打下一句\"抱歉\"，然后按灭了屏幕。\n黑暗里，那轮细细的月亮还亮着。","next":"route_flee_2"},{"id":"route_flee_2","scene":2,"spr":0,"who":"","text":"后来你偶尔路过她的直播间，人多了很多，她唱得还是那么好。\n只是弹幕里，她再也没有喊过你的ID。\n你终究没有回去。只是偶尔在别的直播间听见熟悉的旋律，会想起那个深夜，和她哼歌的样子。","next":"__ending__"},{"id":"__ending__","final":true}]</script>
+<script id="story-data" type="application/json">[{"id":"start","scene":1,"spr":0,"who":"","text":"深夜十一点半，一条冷门的直播推荐把你带进了一个只有三十几个人的直播间。\n画面里，银发的女孩抱着麦克风，一只黑蝙蝠趴在她肩头，懒洋洋地打了个哈欠。","next":"open2"},{"id":"open2","scene":1,"spr":0,"who":"","text":"她唱完最后一句，尾音在安静的房间里飘了一会儿才落下。补光灯把她的睫毛照得很长，弹幕稀稀拉拉地滚过去。","next":"open3"},{"id":"open3","scene":1,"spr":1,"who":"綾Lune","text":"「晚上好呀……今天也有人陪我呢，阿里嘎多。」她把麦克风往怀里收了收，笑起来的时候，声音软软的。","next":"open4"},{"id":"open4","scene":1,"spr":1,"who":"綾Lune","text":"「弹幕我看看哦——」她低头凑近屏幕，忽然顿住，「呀，这个ID，我好像见过你诶。」","next":"open5"},{"id":"open5","scene":1,"spr":0,"who":"","text":"她歪了歪头，肩上的黑蝙蝠也跟着歪了歪脑袋。\n你握着手机，心跳莫名漏了一拍——她怎么会记得你？","next":"open6"},{"id":"open6","scene":1,"spr":0,"who":"","text":"弹幕里没有一个人接话。她却还保持着那个姿势，眼睛一眨不眨地看着镜头，像在等你说点什么。","next":"c1"},{"id":"c1","scene":1,"spr":1,"who":"綾Lune","text":"「那个……」她托着腮，耳朵尖有点红，「要不要，先跟主播说句话呀？就一句，也可以的哦。」","choices":[{"text":"在弹幕里跟她打招呼","hp":2,"next":"c1_a1"},{"text":"默默潜水，把这首听完","hp":0,"next":"c1_b1"}]},{"id":"c1_a1","scene":1,"spr":0,"who":"","text":"你敲下一行\"晚上好，刚才那首歌很好听\"，按下发送。弹幕轻飘飘地滚过去，她却一眼就看见了。","next":"c1_a2"},{"id":"c1_a2","scene":1,"spr":1,"who":"綾Lune","text":"「哇——被夸啦！」她双手合十，笑得眼睛都弯了，「谢谢宝宝，阿里嘎多。今天没白唱呢，哈哈。」","next":"join1"},{"id":"c1_b1","scene":1,"spr":0,"who":"","text":"你把输入框里的字一个个删掉，只把音量调大了一格。\n屏幕那头，她继续唱，唱着唱着，声音忽然轻了一点。","next":"c1_b2"},{"id":"c1_b2","scene":1,"spr":1,"who":"綾Lune","text":"「今天有位观众，从头陪到尾呢。」她对着镜头笑，眼睛弯成月牙，「虽然没说话，但我看见啦。谢谢呀，下次也要来哦。」","next":"join1"},{"id":"join1","scene":1,"spr":0,"who":"","text":"下播前十分钟，她把椅子往前挪了挪，说想再念一遍弹幕。","next":"bridge1"},{"id":"bridge1","scene":1,"spr":1,"who":"綾Lune","text":"「最后再唱一首吧。你们点——」她顿了顿，伸出食指晃了晃，「不过只准点我唱得好的那几首哦，不许刁难主播。」","next":"c2"},{"id":"c2","scene":1,"spr":1,"who":"綾Lune","text":"「来嘛，宝宝，点一首呀。」她抱着麦克风，眼睛亮亮地盯着屏幕，「今天想听什么？」","choices":[{"text":"接她的梗，跟她聊起来","hp":3,"next":"c2_a1"},{"text":"认真夸她，说转音特别好听","hp":2,"next":"c2_b1"},{"text":"打趣：来都来了，投个币呗","hp":1,"next":"c2_c1"}]},{"id":"c2_a1","scene":1,"spr":0,"who":"","text":"你回了一句玩笑：\"那就点一首你唱跑调的。\"\n弹幕瞬间炸开，一排\"哈哈哈哈\"刷了满屏。","next":"c2_a2"},{"id":"c2_a2","scene":1,"spr":1,"who":"綾Lune","text":"「天呐！你、你怎么知道我会跑调呀——」她捂着嘴笑得肩膀发抖，好半天才缓过来，「呜呜，被宝宝抓到把柄啦。」","next":"c2_a3"},{"id":"c2_a3","scene":1,"spr":1,"who":"綾Lune","text":"「不行，这个仇我记下了呢。」她清了清嗓子，故意把第一个音唱歪，然后自己先笑场。\n那半分钟，直播间好像一下子暖了起来。","next":"join2"},{"id":"c2_b1","scene":1,"spr":0,"who":"","text":"你没接梗，只认认真真打下一行字：\"刚才那首，转音的地方特别好听。\"","next":"c2_b2"},{"id":"c2_b2","scene":1,"spr":1,"who":"綾Lune","text":"她盯着那行字看了两秒，耳朵慢慢红了。「……阿里嘎多。」她低头拨了拨琴弦，声音轻下来，「你听得真仔细呢。」","next":"join2"},{"id":"c2_c1","scene":1,"spr":0,"who":"","text":"你半开玩笑地打字：\"主播，来都来了，投个币能点歌吗？\"\n她先是假装板起脸，眉毛都竖起来了。","next":"c2_c2"},{"id":"c2_c2","scene":1,"spr":1,"who":"綾Lune","text":"「哈哈哈，你倒是会做生意呀。」她鼓了鼓腮帮，还是没绷住笑，「行吧，这位老板，这首送你——记得常来哦。」","next":"join2"},{"id":"join2","scene":1,"spr":1,"who":"綾Lune","text":"「好啦，今天的直播就到这里。」她关掉伴奏，冲镜头挥挥手，「晚安呀，宝宝们。」","next":"msg1"},{"id":"msg1","scene":2,"spr":0,"who":"","text":"下播后，你正准备关掉手机，私信栏忽然跳出一个红点。\n头像是一轮细细的月亮。","next":"msg2"},{"id":"msg2","scene":2,"spr":0,"who":"","text":"是綾Lune：「今天谢谢你呀，还没睡吗？」","next":"msg3"},{"id":"msg3","scene":2,"spr":1,"who":"綾Lune","text":"你回了句\"睡不着\"。对面几乎秒回：「那正好，我也睡不着呢。陪我说说话，好不好？」","next":"c3"},{"id":"c3","scene":2,"spr":1,"who":"綾Lune","text":"「我啊……其实每天下播都睡不着呢。」她发来一条语音，背景里只有很轻的电流声，「灯一关，房间就好安静好安静，安静得吓人。」","choices":[{"text":"温柔地接住她的每一句话","hp":4,"next":"c3_a1"},{"text":"适当保持一点距离","hp":1,"next":"c3_b1"},{"text":"略带暧昧地试探一句","hp":3,"next":"c3_c1"}]},{"id":"c3_a1","scene":2,"spr":0,"who":"","text":"你一句一句地回她。她说直播间的压力，说那些没人听她唱歌的晚上，说肩头那只叫\"小蝠\"的黑蝙蝠。","next":"c3_a2"},{"id":"c3_a2","scene":2,"spr":1,"who":"綾Lune","text":"「其实我不太敢跟别人说这些的。」她打字打得很慢，「但是跟你说，好像没关系呢。」","next":"c3_a3"},{"id":"c3_a3","scene":2,"spr":1,"who":"綾Lune","text":"过了很久，她发来一句：「……你真好。」\n隔了几秒，又补上一句：「要是你能一直听我说话，就好了。」","next":"join3"},{"id":"c3_b1","scene":2,"spr":0,"who":"","text":"你回得不快不慢，斟酌着每一句话，连\"早点休息\"都写得客客气气。","next":"c3_b2"},{"id":"c3_b2","scene":2,"spr":1,"who":"綾Lune","text":"「……好呀，那不打扰你啦。」她回得很快，快得像是早就准备好了这句话。\n那个红点安静下去，像一盏被人关掉的灯。","next":"join3"},{"id":"c3_c1","scene":2,"spr":0,"who":"","text":"你半开玩笑地问：\"那我算不算你的特别观众？\"\n输入框上方\"对方正在输入\"亮了又灭，灭了又亮。","next":"c3_c2"},{"id":"c3_c2","scene":2,"spr":1,"who":"綾Lune","text":"「别、别撩我呀……」她发来一个慌乱的系统表情。\n过了一会儿，又补上一句：「……不过，我不讨厌呢。」","next":"join3"},{"id":"join3","scene":2,"spr":0,"who":"","text":"那天之后，你开始留意她开播的时间。\n像是有一根很细的线，把深夜的两端连在了一起。","next":"daily1"},{"id":"daily1","scene":1,"spr":1,"who":"","text":"之后的几个晚上，你几乎都准时出现。\n她开始在开播前给你发一句：「今天也来吗？」","next":"daily2"},{"id":"daily2","scene":2,"spr":1,"who":"綾Lune","text":"「要是哪天你没来……」某次下播后，她忽然说，「我可能会对着空直播间，唱一整晚呢。」\n她说完自己先笑了，但你看得出来，她不是在开玩笑。","next":"d0"},{"id":"d0","scene":2,"spr":0,"who":"","text":"几天后，她发来一条直播预告：周末想找个人连麦，一起唱几首歌。","next":"d1"},{"id":"d1","scene":1,"spr":0,"who":"","text":"到了那晚，直播间的人比平时多得多。弹幕刷得飞快，她却一条也没有念。","next":"d1b"},{"id":"d1b","scene":1,"spr":0,"who":"","text":"你在私信里看见她发来两个字：「你来吗？」后面跟着一个小小的月亮表情。","next":"d2"},{"id":"d2","scene":1,"spr":1,"who":"綾Lune","text":"「不着急哦，我等你。」她嘴上这么说，尾音却越拖越短，「要是……你不想来，也没关系的啦。」","next":"c4"},{"id":"c4","scene":1,"spr":1,"who":"綾Lune","text":"屏幕上，连麦的邀请框亮着。她安静地坐在镜头前，手指一下一下地敲着桌面。","choices":[{"text":"答应，为她准备一下","hp":3,"next":"c4_a1"},{"text":"有点犹豫，婉拒了","hp":1,"next":"c4_b1"}]},{"id":"c4_a1","scene":1,"spr":0,"who":"","text":"你答应下来，翻出她唱过的所有歌单，把最喜欢的那几首悄悄练了一遍。","next":"c4_a2"},{"id":"c4_a2","scene":1,"spr":1,"who":"綾Lune","text":"连麦那晚，她唱了一首很温柔的歌给你听。\n结束后她小声问：「下次……还能找你吗？」你说可以，她笑得像偷偷藏了颗糖。","next":"join4"},{"id":"c4_b1","scene":1,"spr":0,"who":"","text":"你回了句\"那天可能有事\"，她的\"正在输入\"亮了很久，最后只发来一句「嗯，我懂的。」","next":"c4_b2"},{"id":"c4_b2","scene":1,"spr":0,"who":"","text":"那晚的连麦，她一个人唱到了最后。\n下播后，她给你发消息的次数，明显少了一些。","next":"join4"},{"id":"join4","scene":1,"spr":0,"who":"","text":"那段时间，你们之间好像多了一点只有彼此知道的默契。","next":"post1"},{"id":"post1","scene":2,"spr":1,"who":"","text":"那之后，她给你寄来一张明信片。背面是手写的地址，和一句话：「谢谢你愿意听我唱歌。」\n邮戳上的日期，是你第一次进她直播间的那个星期。","next":"post2"},{"id":"post2","scene":2,"spr":1,"who":"綾Lune","text":"「收到啦？」当晚她私信你，语气装作不在意，「……别笑我字丑哦。我还画了一只小蝠，你认出来没有？」","next":"e1"},{"id":"e1","scene":1,"spr":0,"who":"","text":"转折发生在一个很平常的晚上。\n你在她的弹幕里随口提了一句别的主播的名字，说那边也在唱歌，\"还挺好听的\"。","next":"e1b"},{"id":"e1b","scene":1,"spr":0,"who":"","text":"弹幕里有人跟着起哄，说\"别家确实更好听\"。她握着麦克风的手，停在了半空。","next":"e2"},{"id":"e2","scene":1,"spr":0,"who":"","text":"弹幕区安静了三秒。\n她低头调了调麦克风，指节在灯光下泛着白。","next":"e3"},{"id":"e3","scene":1,"spr":1,"who":"綾Lune","text":"「……这样啊。」她笑了一下，没有接话，唱完了整首歌。\n声音比平时低了很多。","next":"c5"},{"id":"c5","scene":2,"spr":1,"who":"綾Lune","text":"下播后，她私信你：「你……喜欢看别人的直播吗？」\n句尾没有语气词。那条消息的\"正在输入\"，删删改改了很久。","choices":[{"text":"顺着她，赶紧道歉哄她","hp":3,"next":"c5_a1"},{"text":"觉得气氛不对，想拉开距离","hp":1,"next":"c5_b1"},{"text":"冷静地讲道理：观众是自由的","hp":0,"next":"c5_c1"}]},{"id":"c5_a1","scene":2,"spr":0,"who":"","text":"你立刻道歉，说只是随口一提，屏幕这边你只看着她一个人。","next":"c5_a2"},{"id":"c5_a2","scene":2,"spr":1,"who":"綾Lune","text":"她闷了很久，才回：「……我不许你看别人。」\n过了一会儿又软下来，「只准看我，好不好呀？我、我会一直唱给你听的。」","next":"join5"},{"id":"c5_b1","scene":2,"spr":0,"who":"","text":"你回了句\"别想太多，我只听歌\"，然后把手机扣在桌上。","next":"c5_b2"},{"id":"c5_b2","scene":2,"spr":1,"who":"綾Lune","text":"她安静了很久，久到你以为她睡了，才等来一句：「……好，我知道了。」\n那之后她照常开播，只是不再喊你的ID，也不再主动私信你。","next":"join5"},{"id":"c5_c1","scene":2,"spr":0,"who":"","text":"你认真解释，喜欢听谁唱歌是你的自由，希望她不要多想。","next":"c5_c2"},{"id":"c5_c2","scene":2,"spr":1,"who":"綾Lune","text":"她只回了一个「嗯」。\n可那之后，她的直播间在深夜还亮着灯，却不再喊你的ID了。","next":"join5"},{"id":"join5","scene":1,"spr":0,"who":"","text":"又一场深夜直播。这一次，她没有唱歌。","next":"f1"},{"id":"f1","scene":2,"spr":0,"who":"","text":"下播后，她发来一条语音：「……能留一下吗？我有话想说。」","next":"f2"},{"id":"f2","scene":2,"spr":1,"who":"綾Lune","text":"语音的背景音里，那只黑蝙蝠轻轻叫了一声。「我大概知道，这样不对呢。」她顿了顿。","next":"f3"},{"id":"f3","scene":2,"spr":1,"who":"綾Lune","text":"「可是我一想到你在别人的直播间里，我就……我就唱不下去呀。」她吸了吸鼻子，「对不起，我是不是很奇怪？」","next":"c6"},{"id":"c6","scene":2,"spr":1,"who":"綾Lune","text":"「那你呢？」她沉默了很久，声音轻得像怕惊动什么，「你要怎么选。」","choices":[{"text":"把心意说开，认真面对她","hp":0,"route":"talk","next":"route_talk_1"},{"text":"答应她：以后只来你的直播间","hp":0,"route":"stay","next":"route_stay_1"},{"text":"说一句抱歉，然后退出这场纠缠","hp":0,"route":"flee","next":"route_flee_1"}]},{"id":"route_talk_1","scene":2,"spr":0,"who":"","text":"你深吸一口气，把藏了很久的话一句一句说出口。\n屏幕那头安静得能听见电流的细响。","next":"route_talk_2"},{"id":"route_talk_2","scene":2,"spr":1,"who":"綾Lune","text":"「……你说真的呀？」她的声音有一点发抖，\n「我、我一直以为，只有我一个人在偷偷喜欢呢。」\n她顿了顿，又轻轻补了一句：「这次……换我先说，好不好？」","next":"__ending__"},{"id":"route_stay_1","scene":2,"spr":0,"who":"","text":"你说，以后只来她的直播间。\n她愣了很长一会儿，然后终于笑起来，眼睛弯弯的。","next":"route_stay_2"},{"id":"route_stay_2","scene":2,"spr":1,"who":"綾Lune","text":"「那说好了哦。」她伸出小指，对着镜头晃了晃，\n「拉钩。骗人的话……我会难过的呀。」\n直播结束后，她把拉过钩的那只手贴在胸口，很久都没有放下。","next":"__ending__"},{"id":"route_flee_1","scene":2,"spr":0,"who":"","text":"你打下一句\"抱歉\"，然后按灭了屏幕。\n黑暗里，那轮细细的月亮还亮着。","next":"route_flee_2"},{"id":"route_flee_2","scene":2,"spr":0,"who":"","text":"后来你换了一个新账号。\n她的直播间还是深夜亮着灯，只是你再也没有点进去过。\n再后来，你习惯了新的深夜。","next":"__ending__"},{"id":"__ending__","final":true}]</script>
 <script>
 (function(){
   'use strict';
@@ -414,7 +417,7 @@ img{user-select:none}
       slotTitle = $('slotTitle'), slotList = $('slotList'), btnCloseSlot = $('btnCloseSlot'),
       endingsList = $('endingsList'), btnCloseEndings = $('btnCloseEndings'),
       btnLoadTitle = $('btnLoadTitle'), btnEndingsTitle = $('btnEndingsTitle'), endCollectCount = $('endCollectCount'),
-      btnAfter = $('btnAfter'), endEpilogue = $('endEpilogue');
+      btnAfter = $('btnAfter'), endEpilogue = $('endEpilogue'), srLive = $('srLive');
 
   /* ================= 状态 ================= */
   var state = { node: 'start', hp: 0, route: null, ended: false, choosing: false, typing: false, transitioning: false };
@@ -425,6 +428,7 @@ img{user-select:none}
   var history = [];
   var unlocked = {};
   var modalOpen = null;
+  var lastFocused = null;
   var autoTimer = null;
   var masterGain = null;
   var typingTimer = null, typingDone = null, typeFull = '', typePos = 0;
@@ -560,6 +564,7 @@ img{user-select:none}
     if (!state.typing) return;
     if (typingTimer) { clearTimeout(typingTimer); typingTimer = null; }
     typePos = typeFull.length; textEl.textContent = typeFull;
+    if (srLive) srLive.textContent = (nameplate.classList.contains('show') ? nameplate.textContent + '：' : '') + typeFull;
     state.typing = false;
     var d = typingDone; typingDone = null;
     if (d) d();
@@ -586,6 +591,7 @@ img{user-select:none}
     }
     choicesEl.classList.add('show');
     state.choosing = true;
+    if (srLive) srLive.textContent = textEl.textContent + ' 请选择：' + list.map(function (c) { return c.text; }).join('；');
     cont.textContent = '选 择';
     layoutUI();
   }
@@ -708,8 +714,9 @@ img{user-select:none}
       document.body.classList.add('ending-mode');
       state.ended = true; state.transitioning = false; gameActive = false;
       menuBtn.classList.remove('show');
-      unlockEnding(e.key);
+      var isNewEnding = unlockEnding(e.key);
       updateCollectCounts();
+      if (isNewEnding) toast('解锁新结局：' + e.title);
       save();
       if (soundOn) { thump(0, 0.2); setTimeout(function () { thump(0.18, 0.14); }, 220); }
     }, reduceMotion ? 0 : 900);
@@ -743,6 +750,7 @@ img{user-select:none}
   }
   function updateTitleButtons() {
     var sv = loadSave();
+    btnStart.style.display = sv ? 'none' : '';
     btnContinue.style.display = sv ? '' : 'none';
     btnReset.style.display = sv ? '' : 'none';
     btnLoadTitle.style.display = hasAnySlot() ? '' : 'none';
@@ -862,6 +870,7 @@ img{user-select:none}
     } catch (e) {}
   }
   function openModal(el, id) {
+    try { lastFocused = document.activeElement; } catch (e) {}
     closeModals();
     modalOpen = id;
     if (el) { el.classList.add('show'); focusFirst(el); }
@@ -873,6 +882,11 @@ img{user-select:none}
     var list = [menuModal, historyModal, slotModal, endingsModal];
     for (var i = 0; i < list.length; i++) if (list[i]) list[i].classList.remove('show');
     if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    try {
+      if (lastFocused && lastFocused.focus && document.contains(lastFocused)) { lastFocused.focus(); }
+      else if (gameActive && !state.ended && menuBtn) { menuBtn.focus(); }
+    } catch (e) {}
+    lastFocused = null;
     if (gameActive && !state.ended) scheduleAuto();
   }
   function openMenu() { if (!gameActive || state.ended) return; openModal(menuModal, 'menu'); }
@@ -964,8 +978,11 @@ img{user-select:none}
   }
   function openSlotModal(mode) { renderSlots(mode); openModal(slotModal, 'slot'); }
   function unlockEnding(key) {
-    if (!key) return;
-    if (!unlocked[key]) { unlocked[key] = true; try { localStorage.setItem(ENDINGS_KEY, JSON.stringify(unlocked)); } catch (e) {} }
+    if (!key) return false;
+    if (unlocked[key]) return false;
+    unlocked[key] = true;
+    try { localStorage.setItem(ENDINGS_KEY, JSON.stringify(unlocked)); } catch (e) {}
+    return true;
   }
   function countUnlocked() {
     var n = 0;
