@@ -113,12 +113,21 @@ img{user-select:none}
 .recall-card p{font-size:15px;line-height:1.95;white-space:pre-line;color:#e8d9ef}
 .recall-card .epilogue{display:block;margin-top:14px;padding-top:12px;text-align:left}
 .recall-hint{display:block;font-size:11px;color:var(--rose);letter-spacing:.12em;margin-top:5px}
-.cg-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .65s ease;z-index:2;pointer-events:none;transform:scale(1)}
+.cg-layer{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transition:opacity .65s ease;z-index:2;pointer-events:none;transform:scale(1)}
+.cg-layer[data-cg="cg_vod_1"]{background-image:url(assets/cg_vod_1.jpg)}
+.cg-layer[data-cg="cg_vod_2"]{background-image:url(assets/cg_vod_2.jpg)}
+.cg-layer[data-cg="cg_vod_3"]{background-image:url(assets/cg_vod_3.jpg)}
+.cg-layer[data-cg="cg_vod_4"]{background-image:url(assets/cg_vod_4.jpg)}
+.cg-layer[data-cg="cg_vod_5"]{background-image:url(assets/cg_vod_5.jpg)}
+.cg-layer[data-cg="cg_vod_6"]{background-image:url(assets/cg_vod_6.jpg)}
 .cg-layer.on{opacity:1;animation:cgZoom 9s ease-out both}
 @keyframes cgZoom{from{transform:scale(1.05)}to{transform:scale(1)}}
 .stage.cg-mode .scene,.stage.cg-mode .ambient{opacity:0}
-.reaction{position:fixed;top:66px;right:18px;width:92px;height:92px;object-fit:contain;z-index:70;opacity:0;transform:translateY(10px) scale(.7);transition:opacity .2s ease,transform .28s cubic-bezier(.2,1.5,.4,1);pointer-events:none;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
+.reaction{position:fixed;top:66px;right:18px;width:92px;height:92px;background-size:contain;background-position:center;background-repeat:no-repeat;z-index:70;opacity:0;transform:translateY(10px) scale(.7);transition:opacity .2s ease,transform .28s cubic-bezier(.2,1.5,.4,1);pointer-events:none;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
 .reaction.show{opacity:1;transform:translateY(0) scale(1)}
+.reaction[data-emoji="laugh"]{background-image:url(assets/emoji_laugh.webp)}
+.reaction[data-emoji="shy"]{background-image:url(assets/emoji_shy.webp)}
+.reaction[data-emoji="tongue"]{background-image:url(assets/emoji_tongue.webp)}
 @media (max-width:700px){.reaction{width:72px;height:72px;top:58px;right:12px}}
 .chapter{position:fixed;inset:0;z-index:88;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .55s ease;background:radial-gradient(ellipse at 50% 45%,rgba(10,8,16,.92),rgba(6,4,10,.98))}
 .chapter.show{opacity:1}
@@ -287,7 +296,7 @@ img{user-select:none}
     <img class="scene" id="sc1" src="assets/scene_clean.jpg" alt="">
     <img class="scene" id="sc2" src="assets/scene2.jpg" alt="">
     <div class="ambient" id="ambient" aria-hidden="true"></div>
-    <img class="cg-layer" id="cgLayer" src="assets/scene_clean.jpg" alt="">
+    <div class="cg-layer" id="cgLayer" aria-hidden="true"></div>
     <div class="veil"></div>
     <div class="red"></div>
     <img class="sprite" id="spriteS" src="assets/f_smile.webp" alt="綾Lune">
@@ -410,9 +419,29 @@ img{user-select:none}
     </div>
   </div>
 
-  <img class="reaction" id="reaction" src="assets/emoji_laugh.webp" alt="">
+  <div class="reaction" id="reaction" aria-hidden="true"></div>
 
   <div class="chapter" id="chapterCard" aria-live="polite"><span id="chapterText"></span></div>
+
+  <template id="cgTpl">
+    <button class="cg-item" type="button" data-id="scene1"><img src="assets/scene_clean.jpg" alt="深夜的直播间"><span class="cap">深夜的直播间</span></button>
+    <button class="cg-item" type="button" data-id="scene2"><img src="assets/scene2.jpg" alt="下播后的私信"><span class="cap">下播后的私信</span></button>
+    <button class="cg-item" type="button" data-id="smile"><img src="assets/f_smile.webp" alt="微笑的她"><span class="cap">微笑的她</span></button>
+    <button class="cg-item" type="button" data-id="wedding"><img src="assets/f_wedding.png" alt="婚纱 · 结局"><span class="cap">婚纱 · 结局</span></button>
+    <button class="cg-item" type="button" data-id="cg_vod_1"><img src="assets/cg_vod_1.jpg" alt="直播画面 · 微笑"><span class="cap">直播画面 · 微笑</span></button>
+    <button class="cg-item" type="button" data-id="cg_vod_2"><img src="assets/cg_vod_2.jpg" alt="直播画面 · 闭眼"><span class="cap">直播画面 · 闭眼</span></button>
+    <button class="cg-item" type="button" data-id="cg_vod_3"><img src="assets/cg_vod_3.jpg" alt="直播画面 · 凝视"><span class="cap">直播画面 · 凝视</span></button>
+    <button class="cg-item" type="button" data-id="cg_vod_4"><img src="assets/cg_vod_4.jpg" alt="直播画面 · 抬眸"><span class="cap">直播画面 · 抬眸</span></button>
+    <button class="cg-item" type="button" data-id="cg_vod_5"><img src="assets/cg_vod_5.jpg" alt="直播画面 · 温柔"><span class="cap">直播画面 · 温柔</span></button>
+    <button class="cg-item" type="button" data-id="cg_vod_6"><img src="assets/cg_vod_6.jpg" alt="直播画面 · 浅笑"><span class="cap">直播画面 · 浅笑</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_smile"><img src="assets/emoji_smile.webp" alt="表情 · 微笑"><span class="cap">表情 · 微笑</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_shy"><img src="assets/emoji_shy.webp" alt="表情 · 害羞"><span class="cap">表情 · 害羞</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_laugh"><img src="assets/emoji_laugh.webp" alt="表情 · 爆笑"><span class="cap">表情 · 爆笑</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_tongue"><img src="assets/emoji_tongue.webp" alt="表情 · 吐舌"><span class="cap">表情 · 吐舌</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_money"><img src="assets/emoji_money.webp" alt="表情 · 要钱"><span class="cap">表情 · 要钱</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_sleep"><img src="assets/emoji_sleep.webp" alt="表情 · 睡觉"><span class="cap">表情 · 睡觉</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_angel"><img src="assets/emoji_angel.webp" alt="表情 · 天使"><span class="cap">表情 · 天使</span></button>
+  </template>
 
   <div class="modal" id="cgModal" role="dialog" aria-modal="true" aria-label="回忆">
     <div class="panel">
@@ -509,24 +538,23 @@ img{user-select:none}
   var cgUnlocked = {};
   var CG_KEY = 'lune_galgame_v3_cg';
   var CG_ITEMS = [
-    { id: 'scene1', src: 'assets/scene_clean.jpg', name: '深夜的直播间' },
-    { id: 'scene2', src: 'assets/scene2.jpg', name: '下播后的私信' },
-    { id: 'smile', src: 'assets/f_smile.webp', name: '微笑的她' },
-    { id: 'wedding', src: 'assets/f_wedding.png', name: '婚纱 · 结局' },
-    { id: 'cg_vod_1', src: 'assets/cg_vod_1.jpg', name: '直播画面 · 微笑' },
-    { id: 'cg_vod_2', src: 'assets/cg_vod_2.jpg', name: '直播画面 · 闭眼' },
-    { id: 'cg_vod_3', src: 'assets/cg_vod_3.jpg', name: '直播画面 · 凝视' },
-    { id: 'cg_vod_4', src: 'assets/cg_vod_4.jpg', name: '直播画面 · 抬眸' },
-    { id: 'cg_vod_5', src: 'assets/cg_vod_5.jpg', name: '直播画面 · 温柔' },
-    { id: 'cg_vod_6', src: 'assets/cg_vod_6.jpg', name: '直播画面 · 浅笑' },
-    { id: 'emoji_smile', src: 'assets/emoji_smile.webp', name: '表情 · 微笑', emoji: true },
-    { id: 'emoji_shy', src: 'assets/emoji_shy.webp', name: '表情 · 害羞', emoji: true },
-    { id: 'emoji_laugh', src: 'assets/emoji_laugh.webp', name: '表情 · 爆笑', emoji: true },
-    { id: 'emoji_tongue', src: 'assets/emoji_tongue.webp', name: '表情 · 吐舌', emoji: true },
-    { id: 'emoji_money', src: 'assets/emoji_money.webp', name: '表情 · 要钱', emoji: true },
-    { id: 'emoji_sleep', src: 'assets/emoji_sleep.webp', name: '表情 · 睡觉', emoji: true },
-    { id: 'emoji_dark', src: 'assets/emoji_dark.webp', name: '表情 · 暗黑', emoji: true },
-    { id: 'emoji_angel', src: 'assets/emoji_angel.webp', name: '表情 · 天使', emoji: true }
+    { id: 'scene1', name: '深夜的直播间' },
+    { id: 'scene2', name: '下播后的私信' },
+    { id: 'smile', name: '微笑的她' },
+    { id: 'wedding', name: '婚纱 · 结局' },
+    { id: 'cg_vod_1', name: '直播画面 · 微笑' },
+    { id: 'cg_vod_2', name: '直播画面 · 闭眼' },
+    { id: 'cg_vod_3', name: '直播画面 · 凝视' },
+    { id: 'cg_vod_4', name: '直播画面 · 抬眸' },
+    { id: 'cg_vod_5', name: '直播画面 · 温柔' },
+    { id: 'cg_vod_6', name: '直播画面 · 浅笑' },
+    { id: 'emoji_smile', name: '表情 · 微笑', emoji: true },
+    { id: 'emoji_shy', name: '表情 · 害羞', emoji: true },
+    { id: 'emoji_laugh', name: '表情 · 爆笑', emoji: true },
+    { id: 'emoji_tongue', name: '表情 · 吐舌', emoji: true },
+    { id: 'emoji_money', name: '表情 · 要钱', emoji: true },
+    { id: 'emoji_sleep', name: '表情 · 睡觉', emoji: true },
+    { id: 'emoji_angel', name: '表情 · 天使', emoji: true }
   ];
   var modalOpen = null;
   var lastFocused = null;
@@ -1021,23 +1049,20 @@ img{user-select:none}
   function setCG(src) {
     if (!cgLayer) return;
     if (src) {
-      if (cgLayer.getAttribute('src') !== src) cgLayer.src = src;
+      var cgId = String(src).replace(/^assets\//, '').replace(/\.jpg$/, '');
+      cgLayer.setAttribute('data-cg', cgId);
       cgLayer.classList.add('on');
       stage.classList.add('cg-mode');
-      markCG(String(src).replace(/^assets\//, '').replace(/\.jpg$/, ''));
+      markCG(cgId);
     } else {
       cgLayer.classList.remove('on');
       stage.classList.remove('cg-mode');
     }
   }
   function showReaction(delta) {
-    if (!reactionEl) return;
-    var key = 'lune-01.webp';
-    if (delta >= 3) key = 'emoji_laugh.webp';
-    else if (delta === 2) key = 'emoji_shy.webp';
-    else if (delta === 1) key = 'emoji_tongue.webp';
-    else key = 'emoji_dark.webp';
-    reactionEl.src = 'assets/' + key;
+    if (!reactionEl || !(delta > 0)) return;
+    var key = delta >= 3 ? 'laugh' : (delta === 2 ? 'shy' : 'tongue');
+    reactionEl.setAttribute('data-emoji', key);
     reactionEl.classList.add('show');
     clearTimeout(reactionEl._t);
     reactionEl._t = setTimeout(function () { reactionEl.classList.remove('show'); }, 1600);
@@ -1057,18 +1082,19 @@ img{user-select:none}
   function renderCG() {
     cgGrid.textContent = '';
     cgBigWrap.style.display = 'none';
+    var tpl = document.getElementById('cgTpl');
+    if (!tpl) return;
     for (var i = 0; i < CG_ITEMS.length; i++) {
       (function (item) {
+        var proto = tpl.content.querySelector('[data-id="' + item.id + '"]');
+        if (!proto) return;
         var unlockedItem = !!item.emoji || !!cgUnlocked[item.id];
-        var b = document.createElement('button');
-        b.type = 'button'; b.className = 'cg-item' + (unlockedItem ? '' : ' locked') + (item.emoji ? ' emoji' : '');
-        var im = document.createElement('img'); im.src = item.src; im.alt = item.name;
-        b.appendChild(im);
-        var cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = item.name; b.appendChild(cap);
+        var b = proto.cloneNode(true);
+        b.className = 'cg-item' + (unlockedItem ? '' : ' locked') + (item.emoji ? ' emoji' : '');
         if (unlockedItem) {
           b.addEventListener('click', function () {
             cgBigWrap.textContent = '';
-            var big = document.createElement('img'); big.src = item.src; big.alt = item.name;
+            var big = b.querySelector('img').cloneNode(true);
             cgBigWrap.appendChild(big);
             var cap = document.createElement('div'); cap.className = 'cg-cap'; cap.textContent = item.name;
             cgBigWrap.appendChild(cap);
