@@ -275,9 +275,9 @@ img{user-select:none}
 
 /* ===== 响应式 ===== */
 @media (max-width:640px){
-  .sprite{height:50vh;width:94vw;max-height:none;max-width:none;object-fit:cover;object-position:68% bottom;left:50%;transform:translateX(-50%) translateY(10px)}
+  .sprite{height:clamp(340px,56vh,500px);width:94vw;max-height:none;max-width:none;object-fit:cover;object-position:64% bottom;left:50%;transform:translateX(-50%) translateY(10px)}
   .sprite.show{transform:translateX(-50%) translateY(0)}
-  #spriteW{height:46vh;object-position:50% 15%}
+  #spriteW{height:clamp(320px,52vh,470px);object-position:52% 12%}
 }
   #text{font-size:16.5px}
   .dialogue{min-height:104px;padding:13px 16px 20px;border-radius:12px}
@@ -296,10 +296,11 @@ img{user-select:none}
 
   /* ===== 手机端专项优化（V5） ===== */
   @media (max-width:640px){
-    .dialogue{width:calc(100vw - 20px);padding:14px 14px 28px;border-radius:14px;bottom:max(10px,env(safe-area-inset-bottom))}
+    .dialogue{width:calc(100vw - 16px);padding:14px 16px 30px;border-radius:16px;bottom:max(12px,env(safe-area-inset-bottom))}
     #text{font-size:17px;line-height:1.8;letter-spacing:.02em;min-height:3em}
     .nameplate{font-size:15px;padding:8px 22px;letter-spacing:.36em}
-    .choices{width:calc(100vw - 24px);gap:10px}
+    .choices{width:calc(100vw - 20px);gap:9px}
+    .choices.show::before{content:'';position:fixed;left:0;right:0;bottom:0;height:46vh;pointer-events:none;background:linear-gradient(180deg,rgba(6,4,10,0),rgba(6,4,10,.55));z-index:-1}
     .choice{font-size:16px;min-height:52px;padding:14px 16px;border-radius:12px}
     .hp{font-size:12px;padding:7px 12px;top:max(12px,env(safe-area-inset-top))}
     .hud-btn{right:58px}
@@ -355,8 +356,23 @@ img{user-select:none}
     .hud-btn,.sound-btn{width:40px;height:40px}
     .hp{right:90px}
   }
-  @media (max-height:520px){
-    .dialogue{width:min(92vw,720px);padding:10px 16px 18px}
+  @media (max-height:520px) and (orientation:landscape){
+    .dialogue{left:auto;right:max(14px,env(safe-area-inset-right));transform:none;width:min(64vw,660px);bottom:max(12px,env(safe-area-inset-bottom));padding:12px 18px 20px;min-height:100px}
+    #text{font-size:16px;min-height:2.4em;line-height:1.75}
+    .nameplate{left:auto;right:calc(max(14px,env(safe-area-inset-right)) + 28px);transform:none;font-size:14px;padding:6px 18px}
+    .choices{left:auto;right:max(14px,env(safe-area-inset-right));transform:none;width:min(64vw,660px);max-height:calc(100vh - 200px);gap:8px}
+    .choice{font-size:14px;min-height:40px;padding:9px 14px}
+    .sprite{left:1%;max-width:44%;max-height:94%;object-position:center bottom}
+    .hp{right:122px}
+    .hud-btn{right:74px}
+    .sound-btn{right:16px}
+    .tip{top:max(12px,env(safe-area-inset-top));left:12px;right:auto;transform:none;max-width:38vw;font-size:11px}
+    .sprite.show{transform:none}
+    .endcard{max-height:92vh;overflow-y:auto}
+    .panel{max-height:92vh}
+  }
+  @media (max-height:520px) and (orientation:portrait){
+    .dialogue{width:min(94vw,720px);padding:10px 16px 18px}
     #text{font-size:15px;min-height:2.4em;line-height:1.7}
     .choices{width:min(94vw,720px)}
     .choice{font-size:14px;min-height:42px;padding:10px 14px}
