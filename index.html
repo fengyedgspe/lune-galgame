@@ -125,11 +125,11 @@ img{user-select:none}
 .cg-layer.on{opacity:1;animation:cgZoom 9s ease-out both}
 @keyframes cgZoom{from{transform:scale(1.05)}to{transform:scale(1)}}
 .stage.cg-mode .scene,.stage.cg-mode .ambient{opacity:0}
-.reaction{position:fixed;top:66px;right:18px;width:92px;height:92px;background-size:contain;background-position:center;background-repeat:no-repeat;z-index:70;opacity:0;transform:translateY(10px) scale(.7);transition:opacity .2s ease,transform .28s cubic-bezier(.2,1.5,.4,1);pointer-events:none;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
+.reaction{position:fixed;top:66px;right:18px;width:92px;height:92px;background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#fff;padding:7px;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.5);z-index:70;opacity:0;transform:translateY(10px) scale(.7);transition:opacity .2s ease,transform .28s cubic-bezier(.2,1.5,.4,1);pointer-events:none;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5))}
 .reaction.show{opacity:1;transform:translateY(0) scale(1)}
-.reaction[data-emoji="laugh"]{background-image:url(assets/emoji_laugh.webp)}
-.reaction[data-emoji="shy"]{background-image:url(assets/emoji_shy.webp)}
-.reaction[data-emoji="tongue"]{background-image:url(assets/emoji_tongue.webp)}
+.reaction[data-emoji="laugh"]{background-image:url(assets/emoji_laugh_v2.webp)}
+.reaction[data-emoji="shy"]{background-image:url(assets/emoji_shy_v2.webp)}
+.reaction[data-emoji="tongue"]{background-image:url(assets/emoji_tongue_v2.webp)}
 @media (max-width:700px){.reaction{width:72px;height:72px;top:58px;right:12px}}
 .chapter{position:fixed;inset:0;z-index:88;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .55s ease;background:radial-gradient(ellipse at 50% 45%,rgba(10,8,16,.92),rgba(6,4,10,.98))}
 .chapter.show{opacity:1}
@@ -140,8 +140,10 @@ img{user-select:none}
 .cg-item .cap{display:block;padding:8px 10px;font-size:12px;letter-spacing:.1em;color:#ffd7e4}
 .cg-item.locked{cursor:default}
 .cg-item.locked img{filter:grayscale(1) brightness(.35)}
-.cg-item.emoji img{height:96px;object-fit:contain;background:rgba(255,255,255,.035)}
-.cg-item.emoji .cap{text-align:center}
+.cg-item.emoji{background:#fbf9fd;border-color:rgba(224,86,120,.45)}
+.cg-item.emoji img{height:110px;object-fit:contain;background:#fbf9fd}
+.cg-item.emoji .cap{text-align:center;background:#fbf9fd;color:#5a3b52}
+.cg-item.emoji:hover img{transform:scale(1.03)}
 .cg-item.locked::after{content:'未解锁';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;letter-spacing:.3em;color:#e9d6f2;background:rgba(6,4,10,.35)}
 .cg-big{margin-top:14px;text-align:center}
 .cg-big img{max-width:100%;max-height:46vh;border-radius:12px;border:1px solid rgba(224,86,120,.35)}
@@ -438,13 +440,13 @@ img{user-select:none}
     <button class="cg-item" type="button" data-id="cg_vod_6"><img src="assets/cg_vod_6.jpg" alt="直播画面 · 浅笑"><span class="cap">直播画面 · 浅笑</span></button>
     <button class="cg-item" type="button" data-id="cg_vod_7"><img src="assets/cg_vod_7.jpg" alt="直播画面 · 沉静"><span class="cap">直播画面 · 沉静</span></button>
     <button class="cg-item" type="button" data-id="cg_vod_8"><img src="assets/cg_vod_8.jpg" alt="直播画面 · 静听"><span class="cap">直播画面 · 静听</span></button>
-    <button class="cg-item emoji" type="button" data-id="emoji_smile"><img src="assets/emoji_smile.webp" alt="表情 · 微笑"><span class="cap">表情 · 微笑</span></button>
-    <button class="cg-item emoji" type="button" data-id="emoji_shy"><img src="assets/emoji_shy.webp" alt="表情 · 害羞"><span class="cap">表情 · 害羞</span></button>
-    <button class="cg-item emoji" type="button" data-id="emoji_laugh"><img src="assets/emoji_laugh.webp" alt="表情 · 爆笑"><span class="cap">表情 · 爆笑</span></button>
-    <button class="cg-item emoji" type="button" data-id="emoji_tongue"><img src="assets/emoji_tongue.webp" alt="表情 · 吐舌"><span class="cap">表情 · 吐舌</span></button>
-    <button class="cg-item emoji" type="button" data-id="emoji_money"><img src="assets/emoji_money.webp" alt="表情 · 要钱"><span class="cap">表情 · 要钱</span></button>
-    <button class="cg-item emoji" type="button" data-id="emoji_sleep"><img src="assets/emoji_sleep.webp" alt="表情 · 睡觉"><span class="cap">表情 · 睡觉</span></button>
-    <button class="cg-item emoji" type="button" data-id="emoji_angel"><img src="assets/emoji_angel.webp" alt="表情 · 天使"><span class="cap">表情 · 天使</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_smile"><img src="assets/emoji_smile_v2.webp" alt="表情 · 微笑"><span class="cap">表情 · 微笑</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_shy"><img src="assets/emoji_shy_v2.webp" alt="表情 · 害羞"><span class="cap">表情 · 害羞</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_laugh"><img src="assets/emoji_laugh_v2.webp" alt="表情 · 爆笑"><span class="cap">表情 · 爆笑</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_tongue"><img src="assets/emoji_tongue_v2.webp" alt="表情 · 吐舌"><span class="cap">表情 · 吐舌</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_money"><img src="assets/emoji_money_v2.webp" alt="表情 · 要钱"><span class="cap">表情 · 要钱</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_sleep"><img src="assets/emoji_sleep_v2.webp" alt="表情 · 睡觉"><span class="cap">表情 · 睡觉</span></button>
+    <button class="cg-item emoji" type="button" data-id="emoji_angel"><img src="assets/emoji_angel_v2.webp" alt="表情 · 天使"><span class="cap">表情 · 天使</span></button>
   </template>
 
   <div class="modal" id="cgModal" role="dialog" aria-modal="true" aria-label="回忆">
