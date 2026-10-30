@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0a14">
+<meta property="og:title" content="綾Lune 直播间的秘密">
+<meta property="og:description" content="深夜直播间里，主播綾Lune 与你之间的五段结局。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fengyedgspe.github.io/lune-galgame/">
 <meta name="description" content="深夜直播间里，主播綾Lune 与你之间的五段结局。">
 <title>綾Lune 直播间的秘密</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' fill='%23e05678'/%3E%3C/svg%3E">
@@ -82,6 +86,53 @@ img{user-select:none}
 .endcard p{font-size:15px;line-height:1.95;color:#e8d9ef;white-space:pre-line}
 .endbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px}
 
+/* ===== 菜单 / 弹层 ===== */
+.hp{right:116px}
+.hud-btn{position:fixed;top:max(12px,env(safe-area-inset-top));right:64px;z-index:120;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(10,8,16,.58);color:#e9d6f2;backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;cursor:pointer}
+.hud-btn.show{display:flex}
+.hud-btn svg{width:20px;height:20px;fill:currentColor}
+.hud-btn.auto{border-color:var(--rose);color:var(--rose)}
+.hud-btn.auto::after{content:'AUTO';position:absolute;bottom:-13px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:.14em;color:var(--rose)}
+.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(6,4,10,.74)}
+.modal.show{display:flex}
+.panel{width:min(94vw,520px);max-height:86vh;overflow:auto;background:rgba(14,10,20,.97);border:1px solid var(--line);border-radius:16px;padding:22px 22px 16px;box-shadow:0 24px 90px rgba(0,0,0,.62)}
+.panel h3{font-size:17px;letter-spacing:.3em;font-weight:600;color:#ffe6ef;margin:0 0 16px;text-align:center}
+.menu-grid{display:flex;flex-direction:column;gap:10px}
+.menu-grid .row{display:flex;gap:10px}
+.menu-grid .row .btn{flex:1;min-width:0;padding:12px 8px;font-size:14px;letter-spacing:.08em}
+.settings{display:flex;flex-direction:column;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(224,86,120,.2)}
+.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);letter-spacing:.06em}
+.setting select{accent-color:var(--rose);background:rgba(20,14,30,.9);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:13px;min-width:130px}
+.setting input[type=range]{accent-color:var(--rose);width:150px}
+.hist-list{display:flex;flex-direction:column;gap:12px;max-height:56vh;overflow:auto;padding-right:4px}
+.hist-line{border-left:2px solid rgba(224,86,120,.35);padding-left:10px}
+.hist-line b{display:block;font-size:12px;letter-spacing:.2em;color:var(--rose);margin-bottom:3px}
+.hist-line p{font-size:14px;line-height:1.7;white-space:pre-line;color:#e8d9ef}
+.hist-empty{font-size:13px;color:var(--muted);text-align:center;padding:18px 0}
+.slots{display:flex;flex-direction:column;gap:10px}
+.slot{display:flex;flex-direction:column;gap:4px;width:100%;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid rgba(224,86,120,.32);background:rgba(20,14,30,.85);color:var(--ink);cursor:pointer}
+.slot:hover,.slot:focus-visible{border-color:var(--rose);background:rgba(224,86,120,.14);outline:none}
+.slot b{font-size:14px;letter-spacing:.14em;color:#ffd7e4}
+.slot span{font-size:12px;color:var(--muted);line-height:1.5;white-space:pre-line}
+.slot.empty{opacity:.62}
+.slot-actions{display:flex;gap:10px;margin-top:16px}
+.slot-actions .btn{flex:1;min-width:0}
+.toast{position:fixed;top:86px;left:50%;transform:translateX(-50%) translateY(-8px);z-index:300;background:rgba(16,10,26,.95);border:1px solid var(--line);color:#ffe6ef;font-size:13px;letter-spacing:.12em;padding:9px 18px;border-radius:22px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.title .progress{margin-top:2px;background:none;border:0;color:var(--muted);font-size:11px;letter-spacing:.2em;padding:4px 8px;cursor:pointer}
+.title .progress:hover{color:#ffd7e4}
+.endcollect{margin-top:14px;font-size:11px;letter-spacing:.22em;color:var(--muted)}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.title h1{animation:floaty 6s ease-in-out infinite}
+@media (max-width:640px){
+  .hp{right:104px}
+  .hud-btn{right:58px;width:40px;height:40px}
+  .sound-btn{right:10px;width:40px;height:40px;top:max(12px,env(safe-area-inset-top))}
+  .panel{padding:18px 16px 12px}
+  .setting select{min-width:110px}
+  .setting input[type=range]{width:120px}
+}
+
 /* ===== 响应式 ===== */
 @media (max-width:640px){
   .sprite{height:54vh;width:96vw;max-height:none;max-width:none;object-fit:cover;object-position:70% bottom;left:50%;transform:translateX(-50%) translateY(10px)}
@@ -100,7 +151,7 @@ img{user-select:none}
   .choices{max-height:66vh}
 }
 @media (prefers-reduced-motion:reduce){
-  .scene,.sprite,.title,.cont,.red{transition:none!important;animation:none!important}
+  .scene,.sprite,.title,.cont,.red,.title h1{transition:none!important;animation:none!important}
 }
 </style>
 </head>
@@ -115,6 +166,9 @@ img{user-select:none}
   </div>
 
   <div class="hp" id="hp">好感 <b id="hpValue">0</b></div>
+  <button class="hud-btn" id="menuBtn" type="button" aria-label="菜单">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+  </button>
   <div class="nameplate" id="nameplate">綾Lune</div>
   <div class="dialogue" id="dialogue" role="button" tabindex="0" aria-label="点击推进剧情">
     <p id="text" aria-live="polite"></p><span class="cont" id="cont">▼</span>
@@ -129,8 +183,10 @@ img{user-select:none}
       <button class="btn" id="btnStart" type="button">开 始</button>
       <button class="btn small" id="btnContinue" type="button" style="display:none">继 续</button>
       <button class="btn small ghost" id="btnReset" type="button" style="display:none">重 新 开 始</button>
+      <button class="btn small ghost" id="btnLoadTitle" type="button" style="display:none">读 档</button>
     </div>
     <div class="foot">一段关于主播与观众的分支剧情</div>
+    <button class="progress" id="btnEndingsTitle" type="button">结局收集 0/5</button>
   </div>
 
   <div class="ending" id="ending" role="dialog" aria-modal="true" aria-label="结局">
@@ -138,6 +194,7 @@ img{user-select:none}
       <div class="tag" id="endTag">END</div>
       <h2 id="endTitle"></h2>
       <p id="endText"></p>
+      <div class="endcollect">已收录 · 结局收集 <b id="endCollectCount">0/5</b></div>
       <div class="endbtns">
         <button class="btn small" id="btnHome" type="button">返 回 标 题</button>
         <button class="btn small ghost" id="btnAgain" type="button">重 新 开 始</button>
@@ -149,6 +206,64 @@ img{user-select:none}
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/></svg>
     <svg class="wav" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 5.8a4 4 0 0 1 0 12.4l1.4 1.4a6 6 0 0 0 0-8.5l-1.4-1.3zM3 9v6h4l5 4V5L7 9H3z"/></svg>
   </button>
+
+  <div class="modal" id="menuModal" role="dialog" aria-modal="true" aria-label="菜单">
+    <div class="panel">
+      <h3>菜 单</h3>
+      <div class="menu-grid">
+        <div class="row">
+          <button class="btn small" id="btnAuto" type="button">自动播放：关</button>
+          <button class="btn small ghost" id="btnHistory" type="button">回 看</button>
+        </div>
+        <div class="row">
+          <button class="btn small ghost" id="btnSaveSlot" type="button">存 档</button>
+          <button class="btn small ghost" id="btnLoadSlot" type="button">读 档</button>
+        </div>
+        <div class="row">
+          <button class="btn small ghost" id="btnEndings" type="button">结局收集 0/5</button>
+          <button class="btn small ghost" id="btnMenuTitle" type="button">返回标题</button>
+        </div>
+      </div>
+      <div class="settings">
+        <label class="setting">文字速度
+          <select id="selSpeed"><option value="slow">慢</option><option value="normal">中</option><option value="fast">快</option><option value="instant">瞬间</option></select>
+        </label>
+        <label class="setting">自动间隔
+          <select id="selAuto"><option value="1200">短</option><option value="2200">中</option><option value="3600">长</option></select>
+        </label>
+        <label class="setting">音效音量
+          <input type="range" id="rngVolume" min="0" max="100" step="5" value="70">
+        </label>
+      </div>
+      <div class="slot-actions"><button class="btn small" id="btnCloseMenu" type="button">继续阅读</button></div>
+    </div>
+  </div>
+
+  <div class="modal" id="historyModal" role="dialog" aria-modal="true" aria-label="回看">
+    <div class="panel">
+      <h3>回 看</h3>
+      <div class="hist-list" id="histList"></div>
+      <div class="slot-actions"><button class="btn small" id="btnCloseHistory" type="button">关闭</button></div>
+    </div>
+  </div>
+
+  <div class="modal" id="slotModal" role="dialog" aria-modal="true" aria-label="存档">
+    <div class="panel">
+      <h3 id="slotTitle">存 档</h3>
+      <div class="slots" id="slotList"></div>
+      <div class="slot-actions"><button class="btn small ghost" id="btnCloseSlot" type="button">关闭</button></div>
+    </div>
+  </div>
+
+  <div class="modal" id="endingsModal" role="dialog" aria-modal="true" aria-label="结局收集">
+    <div class="panel">
+      <h3>结 局 收 集</h3>
+      <div class="slots" id="endingsList"></div>
+      <div class="slot-actions"><button class="btn small ghost" id="btnCloseEndings" type="button">关闭</button></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
 
 <script id="story-data" type="application/json">[{"id":"start","scene":1,"spr":0,"who":"","text":"深夜十一点半，一条冷门的直播推荐把你带进了一个只有三十几个人的直播间。\n画面里，银发的女孩抱着麦克风，一只黑蝙蝠趴在她肩头，懒洋洋地打了个哈欠。","next":"open2"},{"id":"open2","scene":1,"spr":0,"who":"","text":"她唱完最后一句，尾音在安静的房间里飘了一会儿才落下。补光灯把她的睫毛照得很长，弹幕稀稀拉拉地滚过去。","next":"open3"},{"id":"open3","scene":1,"spr":1,"who":"綾Lune","text":"「晚上好呀……今天也有人陪我呢，阿里嘎多。」她把麦克风往怀里收了收，笑起来的时候，声音软软的。","next":"open4"},{"id":"open4","scene":1,"spr":1,"who":"綾Lune","text":"「弹幕我看看哦——」她低头凑近屏幕，忽然顿住，「呀，这个ID，我好像见过你诶。」","next":"open5"},{"id":"open5","scene":1,"spr":0,"who":"","text":"她歪了歪头，肩上的黑蝙蝠也跟着歪了歪脑袋。\n你握着手机，心跳莫名漏了一拍——她怎么会记得你？","next":"open6"},{"id":"open6","scene":1,"spr":0,"who":"","text":"弹幕里没有一个人接话。她却还保持着那个姿势，眼睛一眨不眨地看着镜头，像在等你说点什么。","next":"c1"},{"id":"c1","scene":1,"spr":1,"who":"綾Lune","text":"「那个……」她托着腮，耳朵尖有点红，「要不要，先跟主播说句话呀？就一句，也可以的哦。」","choices":[{"text":"在弹幕里跟她打招呼","hp":2,"next":"c1_a1"},{"text":"默默潜水，把这首听完","hp":0,"next":"c1_b1"}]},{"id":"c1_a1","scene":1,"spr":0,"who":"","text":"你敲下一行\"晚上好，刚才那首歌很好听\"，按下发送。弹幕轻飘飘地滚过去，她却一眼就看见了。","next":"c1_a2"},{"id":"c1_a2","scene":1,"spr":1,"who":"綾Lune","text":"「哇——被夸啦！」她双手合十，笑得眼睛都弯了，「谢谢宝宝，阿里嘎多。今天没白唱呢，哈哈。」","next":"join1"},{"id":"c1_b1","scene":1,"spr":0,"who":"","text":"你把输入框里的字一个个删掉，只把音量调大了一格。\n屏幕那头，她继续唱，唱着唱着，声音忽然轻了一点。","next":"c1_b2"},{"id":"c1_b2","scene":1,"spr":1,"who":"綾Lune","text":"「今天有位观众，从头陪到尾呢。」她对着镜头笑，眼睛弯成月牙，「虽然没说话，但我看见啦。谢谢呀，下次也要来哦。」","next":"join1"},{"id":"join1","scene":1,"spr":0,"who":"","text":"下播前十分钟，她把椅子往前挪了挪，说想再念一遍弹幕。","next":"bridge1"},{"id":"bridge1","scene":1,"spr":1,"who":"綾Lune","text":"「最后再唱一首吧。你们点——」她顿了顿，伸出食指晃了晃，「不过只准点我唱得好的那几首哦，不许刁难主播。」","next":"c2"},{"id":"c2","scene":1,"spr":1,"who":"綾Lune","text":"「来嘛，宝宝，点一首呀。」她抱着麦克风，眼睛亮亮地盯着屏幕，「今天想听什么？」","choices":[{"text":"接她的梗，跟她聊起来","hp":3,"next":"c2_a1"},{"text":"认真夸她，说转音特别好听","hp":2,"next":"c2_b1"},{"text":"打趣：来都来了，投个币呗","hp":1,"next":"c2_c1"}]},{"id":"c2_a1","scene":1,"spr":0,"who":"","text":"你回了一句玩笑：\"那就点一首你唱跑调的。\"\n弹幕瞬间炸开，一排\"哈哈哈哈\"刷了满屏。","next":"c2_a2"},{"id":"c2_a2","scene":1,"spr":1,"who":"綾Lune","text":"「天呐！你、你怎么知道我会跑调呀——」她捂着嘴笑得肩膀发抖，好半天才缓过来，「呜呜，被宝宝抓到把柄啦。」","next":"c2_a3"},{"id":"c2_a3","scene":1,"spr":1,"who":"綾Lune","text":"「不行，这个仇我记下了呢。」她清了清嗓子，故意把第一个音唱歪，然后自己先笑场。\n那半分钟，直播间好像一下子暖了起来。","next":"join2"},{"id":"c2_b1","scene":1,"spr":0,"who":"","text":"你没接梗，只认认真真打下一行字：\"刚才那首，转音的地方特别好听。\"","next":"c2_b2"},{"id":"c2_b2","scene":1,"spr":1,"who":"綾Lune","text":"她盯着那行字看了两秒，耳朵慢慢红了。「……阿里嘎多。」她低头拨了拨琴弦，声音轻下来，「你听得真仔细呢。」","next":"join2"},{"id":"c2_c1","scene":1,"spr":0,"who":"","text":"你半开玩笑地打字：\"主播，来都来了，投个币能点歌吗？\"\n她先是假装板起脸，眉毛都竖起来了。","next":"c2_c2"},{"id":"c2_c2","scene":1,"spr":1,"who":"綾Lune","text":"「哈哈哈，你倒是会做生意呀。」她鼓了鼓腮帮，还是没绷住笑，「行吧，这位老板，这首送你——记得常来哦。」","next":"join2"},{"id":"join2","scene":1,"spr":1,"who":"綾Lune","text":"「好啦，今天的直播就到这里。」她关掉伴奏，冲镜头挥挥手，「晚安呀，宝宝们。」","next":"msg1"},{"id":"msg1","scene":2,"spr":0,"who":"","text":"下播后，你正准备关掉手机，私信栏忽然跳出一个红点。\n头像是一轮细细的月亮。","next":"msg2"},{"id":"msg2","scene":2,"spr":0,"who":"","text":"是綾Lune：「今天谢谢你呀，还没睡吗？」","next":"msg3"},{"id":"msg3","scene":2,"spr":1,"who":"綾Lune","text":"你回了句\"睡不着\"。对面几乎秒回：「那正好，我也睡不着呢。陪我说说话，好不好？」","next":"c3"},{"id":"c3","scene":2,"spr":1,"who":"綾Lune","text":"「我啊……其实每天下播都睡不着呢。」她发来一条语音，背景里只有很轻的电流声，「灯一关，房间就好安静好安静，安静得吓人。」","choices":[{"text":"温柔地接住她的每一句话","hp":4,"next":"c3_a1"},{"text":"适当保持一点距离","hp":1,"next":"c3_b1"},{"text":"略带暧昧地试探一句","hp":3,"next":"c3_c1"}]},{"id":"c3_a1","scene":2,"spr":0,"who":"","text":"你一句一句地回她。她说直播间的压力，说那些没人听她唱歌的晚上，说肩头那只叫\"小蝠\"的黑蝙蝠。","next":"c3_a2"},{"id":"c3_a2","scene":2,"spr":1,"who":"綾Lune","text":"「其实我不太敢跟别人说这些的。」她打字打得很慢，「但是跟你说，好像没关系呢。」","next":"c3_a3"},{"id":"c3_a3","scene":2,"spr":1,"who":"綾Lune","text":"过了很久，她发来一句：「……你真好。」\n隔了几秒，又补上一句：「要是你能一直听我说话，就好了。」","next":"join3"},{"id":"c3_b1","scene":2,"spr":0,"who":"","text":"你回得不快不慢，斟酌着每一句话，连\"早点休息\"都写得客客气气。","next":"c3_b2"},{"id":"c3_b2","scene":2,"spr":1,"who":"綾Lune","text":"「……好呀，那不打扰你啦。」她回得很快，快得像是早就准备好了这句话。\n那个红点安静下去，像一盏被人关掉的灯。","next":"join3"},{"id":"c3_c1","scene":2,"spr":0,"who":"","text":"你半开玩笑地问：\"那我算不算你的特别观众？\"\n输入框上方\"对方正在输入\"亮了又灭，灭了又亮。","next":"c3_c2"},{"id":"c3_c2","scene":2,"spr":1,"who":"綾Lune","text":"「别、别撩我呀……」她发来一个慌乱的系统表情。\n过了一会儿，又补上一句：「……不过，我不讨厌呢。」","next":"join3"},{"id":"join3","scene":2,"spr":0,"who":"","text":"那天之后，你开始留意她开播的时间。\n像是有一根很细的线，把深夜的两端连在了一起。","next":"d0"},{"id":"d0","scene":2,"spr":0,"who":"","text":"几天后，她发来一条直播预告：周末想找个人连麦，一起唱几首歌。","next":"d1"},{"id":"d1","scene":1,"spr":0,"who":"","text":"到了那晚，直播间的人比平时多得多。弹幕刷得飞快，她却一条也没有念。","next":"d1b"},{"id":"d1b","scene":1,"spr":0,"who":"","text":"你在私信里看见她发来两个字：「你来吗？」后面跟着一个小小的月亮表情。","next":"d2"},{"id":"d2","scene":1,"spr":1,"who":"綾Lune","text":"「不着急哦，我等你。」她嘴上这么说，尾音却越拖越短，「要是……你不想来，也没关系的啦。」","next":"c4"},{"id":"c4","scene":1,"spr":1,"who":"綾Lune","text":"屏幕上，连麦的邀请框亮着。她安静地坐在镜头前，手指一下一下地敲着桌面。","choices":[{"text":"答应，为她准备一下","hp":3,"next":"c4_a1"},{"text":"有点犹豫，婉拒了","hp":1,"next":"c4_b1"}]},{"id":"c4_a1","scene":1,"spr":0,"who":"","text":"你答应下来，翻出她唱过的所有歌单，把最喜欢的那几首悄悄练了一遍。","next":"c4_a2"},{"id":"c4_a2","scene":1,"spr":1,"who":"綾Lune","text":"连麦那晚，她唱了一首很温柔的歌给你听。\n结束后她小声问：「下次……还能找你吗？」你说可以，她笑得像偷偷藏了颗糖。","next":"join4"},{"id":"c4_b1","scene":1,"spr":0,"who":"","text":"你回了句\"那天可能有事\"，她的\"正在输入\"亮了很久，最后只发来一句「嗯，我懂的。」","next":"c4_b2"},{"id":"c4_b2","scene":1,"spr":0,"who":"","text":"那晚的连麦，她一个人唱到了最后。\n下播后，她给你发消息的次数，明显少了一些。","next":"join4"},{"id":"join4","scene":1,"spr":0,"who":"","text":"转折发生在一个很平常的晚上。","next":"e1"},{"id":"e1","scene":1,"spr":0,"who":"","text":"你在她的弹幕里随口提了一句别的主播的名字，说那边也在唱歌，\"还挺好听的\"。","next":"e1b"},{"id":"e1b","scene":1,"spr":0,"who":"","text":"弹幕里有人跟着起哄，说\"别家确实更好听\"。她握着麦克风的手，停在了半空。","next":"e2"},{"id":"e2","scene":1,"spr":0,"who":"","text":"弹幕区安静了三秒。\n她低头调了调麦克风，指节在灯光下泛着白。","next":"e3"},{"id":"e3","scene":1,"spr":1,"who":"綾Lune","text":"「……这样啊。」她笑了一下，没有接话，唱完了整首歌。\n声音比平时低了很多。","next":"c5"},{"id":"c5","scene":2,"spr":1,"who":"綾Lune","text":"下播后，她私信你：「你……喜欢看别人的直播吗？」\n句尾没有语气词。那条消息的\"正在输入\"，删删改改了很久。","choices":[{"text":"顺着她，赶紧道歉哄她","hp":3,"next":"c5_a1"},{"text":"觉得气氛不对，想拉开距离","hp":1,"next":"c5_b1"},{"text":"冷静地讲道理：观众是自由的","hp":0,"next":"c5_c1"}]},{"id":"c5_a1","scene":2,"spr":0,"who":"","text":"你立刻道歉，说只是随口一提，屏幕这边你只看着她一个人。","next":"c5_a2"},{"id":"c5_a2","scene":2,"spr":1,"who":"綾Lune","text":"她闷了很久，才回：「……我不许你看别人。」\n过了一会儿又软下来，「只准看我，好不好呀？我、我会一直唱给你听的。」","next":"join5"},{"id":"c5_b1","scene":2,"spr":0,"who":"","text":"你回了句\"别想太多，我只听歌\"，然后把手机扣在桌上。","next":"c5_b2"},{"id":"c5_b2","scene":2,"spr":1,"who":"綾Lune","text":"她安静了很久，久到你以为她睡了，才等来一句：「……好，我知道了。」\n那之后她照常开播，只是不再喊你的ID，也不再主动私信你。","next":"join5"},{"id":"c5_c1","scene":2,"spr":0,"who":"","text":"你认真解释，喜欢听谁唱歌是你的自由，希望她不要多想。","next":"c5_c2"},{"id":"c5_c2","scene":2,"spr":1,"who":"綾Lune","text":"她只回了一个「嗯」。\n可那之后，她的直播间在深夜还亮着灯，却不再喊你的ID了。","next":"join5"},{"id":"join5","scene":1,"spr":0,"who":"","text":"又一场深夜直播。这一次，她没有唱歌。","next":"f1"},{"id":"f1","scene":2,"spr":0,"who":"","text":"下播后，她发来一条语音：「……能留一下吗？我有话想说。」","next":"f2"},{"id":"f2","scene":2,"spr":1,"who":"綾Lune","text":"语音的背景音里，那只黑蝙蝠轻轻叫了一声。「我大概知道，这样不对呢。」她顿了顿。","next":"f3"},{"id":"f3","scene":2,"spr":1,"who":"綾Lune","text":"「可是我一想到你在别人的直播间里，我就……我就唱不下去呀。」她吸了吸鼻子，「对不起，我是不是很奇怪？」","next":"c6"},{"id":"c6","scene":2,"spr":1,"who":"綾Lune","text":"「那你呢？」她沉默了很久，声音轻得像怕惊动什么，「你要怎么选。」","choices":[{"text":"把心意说开，认真面对她","hp":0,"route":"talk","next":"route_talk_1"},{"text":"答应她：以后只来你的直播间","hp":0,"route":"stay","next":"route_stay_1"},{"text":"说一句抱歉，然后退出这场纠缠","hp":0,"route":"flee","next":"route_flee_1"}]},{"id":"route_talk_1","scene":2,"spr":0,"who":"","text":"你深吸一口气，把藏了很久的话一句一句说出口。\n屏幕那头安静得能听见电流的细响。","next":"route_talk_2"},{"id":"route_talk_2","scene":2,"spr":1,"who":"綾Lune","text":"「……你说真的呀？」她的声音有一点发抖，\n「我、我一直以为，只有我一个人在偷偷喜欢呢。」","next":"__ending__"},{"id":"route_stay_1","scene":2,"spr":0,"who":"","text":"你说，以后只来她的直播间。\n她愣了很长一会儿，然后终于笑起来，眼睛弯弯的。","next":"route_stay_2"},{"id":"route_stay_2","scene":2,"spr":1,"who":"綾Lune","text":"「那说好了哦。」她伸出小指，对着镜头晃了晃，\n「拉钩。骗人的话……我会难过的呀。」","next":"__ending__"},{"id":"route_flee_1","scene":2,"spr":0,"who":"","text":"你打下一句\"抱歉\"，然后按灭了屏幕。\n黑暗里，那轮细细的月亮还亮着。","next":"route_flee_2"},{"id":"route_flee_2","scene":2,"spr":0,"who":"","text":"后来你偶尔路过她的直播间，人多了很多，她唱得还是那么好。\n只是弹幕里，她再也没有喊过你的ID。","next":"__ending__"},{"id":"__ending__","final":true}]</script>
 <script>
@@ -163,12 +278,13 @@ img{user-select:none}
     ne_miss: { tag: 'NORMAL END · 错过', title: '「错过」', spr: 0, text: '你退出了她的直播间，她也没有再找过你。\n后来你听说，她粉丝涨了很多，只是那些歌，再没有一首是为你唱的。' },
     be_cage: { tag: 'BAD END · 笼中', title: '「她不想放你走」', spr: 1, text: '「既然你问了……」她笑了笑，那笑容让你后背发凉。\n「那我就不放你走了。反正——你只准喜欢我一个，对吧？」' }
   };
+  for (var ek in ENDINGS) { if (Object.prototype.hasOwnProperty.call(ENDINGS, ek)) ENDINGS[ek].key = ek; }
   var STORY = JSON.parse(document.getElementById('story-data').textContent);
   var MAP = {};
   for (var i = 0; i < STORY.length; i++) MAP[STORY[i].id] = STORY[i];
 
   /* ================= 常量与元素 ================= */
-  var KEY = 'lune_galgame_v2_save';
+  var KEY = 'lune_galgame_v3_auto';
   var SKEY = 'lune_galgame_v2_sound';
   var $ = function (id) { return document.getElementById(id); };
   var stage = $('stage'), sc1 = $('sc1'), sc2 = $('sc2'),
@@ -179,10 +295,28 @@ img{user-select:none}
       titleEl = $('title'), endingEl = $('ending'),
       endTag = $('endTag'), endTitle = $('endTitle'), endText = $('endText'),
       btnStart = $('btnStart'), btnContinue = $('btnContinue'), btnReset = $('btnReset'),
-      btnHome = $('btnHome'), btnAgain = $('btnAgain'), soundBtn = $('soundBtn');
+      btnHome = $('btnHome'), btnAgain = $('btnAgain'), soundBtn = $('soundBtn'),
+      menuBtn = $('menuBtn'), toastEl = $('toast'),
+      menuModal = $('menuModal'), historyModal = $('historyModal'), slotModal = $('slotModal'), endingsModal = $('endingsModal'),
+      btnAuto = $('btnAuto'), btnHistory = $('btnHistory'), btnSaveSlot = $('btnSaveSlot'), btnLoadSlot = $('btnLoadSlot'),
+      btnEndings = $('btnEndings'), btnMenuTitle = $('btnMenuTitle'), btnCloseMenu = $('btnCloseMenu'),
+      selSpeed = $('selSpeed'), selAuto = $('selAuto'), rngVolume = $('rngVolume'),
+      histList = $('histList'), btnCloseHistory = $('btnCloseHistory'),
+      slotTitle = $('slotTitle'), slotList = $('slotList'), btnCloseSlot = $('btnCloseSlot'),
+      endingsList = $('endingsList'), btnCloseEndings = $('btnCloseEndings'),
+      btnLoadTitle = $('btnLoadTitle'), btnEndingsTitle = $('btnEndingsTitle'), endCollectCount = $('endCollectCount');
 
   /* ================= 状态 ================= */
   var state = { node: 'start', hp: 0, route: null, ended: false, choosing: false, typing: false, transitioning: false };
+  var SETTINGS_KEY = 'lune_galgame_v3_settings';
+  var ENDINGS_KEY = 'lune_galgame_v3_endings';
+  var SLOT_PREFIX = 'lune_galgame_v3_slot_';
+  var settings = { speed: 'normal', autoDelay: 2200, volume: 70, auto: false };
+  var history = [];
+  var unlocked = {};
+  var modalOpen = null;
+  var autoTimer = null;
+  var masterGain = null;
   var typingTimer = null, typingDone = null, typeFull = '', typePos = 0;
   var titleVisible = true, gameActive = false;
   var soundOn = false, actx = null, heartTimer = null, droneNodes = null;
@@ -192,7 +326,13 @@ img{user-select:none}
   /* ================= 声音 ================= */
   function ac() {
     if (!actx) { var A = window.AudioContext || window.webkitAudioContext; if (!A) throw new Error('no audio'); actx = new A(); }
+    if (!masterGain) {
+      try { masterGain = actx.createGain(); masterGain.gain.value = Math.max(0, Math.min(1, settings.volume / 100)); masterGain.connect(actx.destination); } catch (e) {}
+    }
     return actx;
+  }
+  function applyVolume() {
+    if (masterGain) { try { masterGain.gain.value = Math.max(0, Math.min(1, settings.volume / 100)); } catch (e) {} }
   }
   function tone(freq, peak, dur, type) {
     try {
@@ -200,7 +340,7 @@ img{user-select:none}
       var t = c.currentTime, o = c.createOscillator(), g = c.createGain();
       o.type = type || 'sine'; o.frequency.value = freq;
       g.gain.setValueAtTime(peak, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-      o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + dur + 0.02);
+      o.connect(g); g.connect(masterGain || c.destination); o.start(t); o.stop(t + dur + 0.02);
     } catch (e) {}
   }
   function thump(d, p) {
@@ -209,14 +349,14 @@ img{user-select:none}
       var t = c.currentTime + d, o = c.createOscillator(), g = c.createGain();
       o.type = 'sine'; o.frequency.value = 58;
       g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(p, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
-      o.connect(g); g.connect(c.destination); o.start(t); o.stop(t + 0.32);
+      o.connect(g); g.connect(masterGain || c.destination); o.start(t); o.stop(t + 0.32);
     } catch (e) {}
   }
   function startAmbient() {
     try {
       var c = ac(); if (c.state === 'suspended') c.resume();
       stopAmbient();
-      var g = c.createGain(); g.gain.value = 0.028; g.connect(c.destination);
+      var g = c.createGain(); g.gain.value = 0.028; g.connect(masterGain || c.destination);
       var o1 = c.createOscillator(); o1.type = 'sine'; o1.frequency.value = 55;
       var o2 = c.createOscillator(); o2.type = 'sine'; o2.frequency.value = 110.5;
       var lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 300;
@@ -284,7 +424,7 @@ img{user-select:none}
     state.typing = true; typeFull = s || ''; typePos = 0; typingDone = done || null;
     textEl.textContent = '';
     cont.classList.remove('show');
-    if (reduceMotion || !typeFull.length) { finishTyping(); return; }
+    if (reduceMotion || settings.speed === 'instant' || !typeFull.length) { finishTyping(); return; }
     step();
   }
   function step() {
@@ -295,10 +435,11 @@ img{user-select:none}
     if (soundOn && typePos % 3 === 0) tone(1900, 0.02, 0.012, 'triangle');
     if (typePos >= typeFull.length) { finishTyping(); return; }
     var ch = typeFull.charAt(typePos - 1);
-    var delay = 66;
+    var mult = settings.speed === 'slow' ? 1.5 : settings.speed === 'fast' ? 0.55 : 1;
+    var delay = 66 * mult;
     var code = typeFull.charCodeAt(typePos - 1);
-    if (code === 10) delay = 90;
-    else if ('，。？！…、；：'.indexOf(ch) !== -1) delay = 220;
+    if (code === 10) delay = 90 * mult;
+    else if ('，。？！…、；：'.indexOf(ch) !== -1) delay = 220 * mult;
     typingTimer = setTimeout(step, delay);
   }
   function finishTyping() {
@@ -353,16 +494,21 @@ img{user-select:none}
     var myId = state.node;
     var hasChoices = !!node.choices && node.choices.length > 0;
     state.choosing = hasChoices;
+    if (node.text) { history.push({ who: node.who || '', text: node.text }); if (history.length > 240) history.shift(); }
+    menuBtn.classList.add('show');
+    cancelAuto();
     typeText(node.text || '', function () {
       if (state.node !== myId) return;
-      if (hasChoices) showChoices(node.choices);
-      else cont.classList.add('show');
+      if (hasChoices) { showChoices(node.choices); }
+      else { cont.classList.add('show'); scheduleAuto(); }
     });
   }
   function els_cont_reset() { cont.classList.remove('show'); cont.textContent = '▼'; }
 
   /* ================= 交互 ================= */
   function advance() {
+    if (modalOpen) return;
+    cancelAuto();
     if (state.ended || state.transitioning) return;
     if (state.typing) { finishTyping(); return; }
     if (state.choosing) return;
@@ -372,7 +518,8 @@ img{user-select:none}
     if (node.next) { state.node = node.next; save(); renderNode(); }
   }
   function choose(c) {
-    if (!state.choosing || state.ended || state.transitioning) return;
+    if (!state.choosing || state.ended || state.transitioning || modalOpen) return;
+    cancelAuto();
     hideChoices();
     state.hp = Math.max(0, state.hp + (typeof c.hp === 'number' ? c.hp : 0));
     if (c.route) state.route = c.route;
@@ -384,12 +531,20 @@ img{user-select:none}
   }
   document.addEventListener('click', function (ev) {
     var t = ev.target;
-    if (t && t.closest && (t.closest('button') || t.closest('.title') || t.closest('.ending'))) return;
+    if (t && t.closest && (t.closest('button') || t.closest('.title') || t.closest('.ending') || t.closest('.modal'))) return;
     advance();
   });
   document.addEventListener('keydown', function (ev) {
-    if (!gameActive) return;
     var k = ev.key;
+    if (k === 'Escape') {
+      if (modalOpen) { closeModals(); ev.preventDefault(); }
+      else if (gameActive && !state.ended) { openMenu(); ev.preventDefault(); }
+      return;
+    }
+    if (modalOpen) return;
+    if (!gameActive) return;
+    if (k === 'h' || k === 'H') { openHistory(); ev.preventDefault(); return; }
+    if (k === 'a' || k === 'A') { toggleAuto(); ev.preventDefault(); return; }
     if (k === ' ' || k === 'Enter') { ev.preventDefault(); advance(); return; }
     if (k >= '1' && k <= '3' && state.choosing) {
       var idx = parseInt(k, 10) - 1;
@@ -416,6 +571,9 @@ img{user-select:none}
       endTag.textContent = e.tag; endTitle.textContent = e.title; endText.textContent = e.text;
       endingEl.classList.add('show');
       state.ended = true; state.transitioning = false; gameActive = false;
+      menuBtn.classList.remove('show');
+      unlockEnding(e.key);
+      updateCollectCounts();
       save();
       if (soundOn) { thump(0, 0.2); setTimeout(function () { thump(0.18, 0.14); }, 220); }
     }, reduceMotion ? 0 : 900);
@@ -423,12 +581,12 @@ img{user-select:none}
 
   /* ================= 存档 ================= */
   function save() {
-    try { localStorage.setItem(KEY, JSON.stringify({ v: 2, node: state.node, hp: state.hp, route: state.route, ended: state.ended, ts: Date.now() })); } catch (e) {}
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 3, node: state.node, hp: state.hp, route: state.route, ended: state.ended, ts: Date.now() })); } catch (e) {}
   }
   function loadSave() {
     try {
       var s = JSON.parse(localStorage.getItem(KEY) || 'null');
-      if (!s || s.v !== 2 || typeof s.node !== 'string') return null;
+      if (!s || s.v !== 3 || typeof s.node !== 'string') return null;
       if (s.node === '__ending__') return s;
       if (!MAP[s.node]) return null;
       return s;
@@ -451,6 +609,8 @@ img{user-select:none}
     var sv = loadSave();
     btnContinue.style.display = sv ? '' : 'none';
     btnReset.style.display = sv ? '' : 'none';
+    btnLoadTitle.style.display = hasAnySlot() ? '' : 'none';
+    updateCollectCounts();
   }
   function resetUiForGame() {
     endingEl.classList.remove('show');
@@ -465,7 +625,9 @@ img{user-select:none}
   }
   function newGame() {
     state = { node: 'start', hp: 0, route: null, ended: false, choosing: false, typing: false, transitioning: false };
+    history = [];
     try { localStorage.removeItem(KEY); } catch (e) {}
+    closeModals();
     beginGame();
     flashTip('点击推进剧情');
   }
@@ -479,15 +641,20 @@ img{user-select:none}
     var sv = loadSave();
     if (!sv) { newGame(); return; }
     state = { node: sv.node, hp: sv.hp || 0, route: sv.route || null, ended: !!sv.ended, choosing: false, typing: false, transitioning: false };
+    history = [];
+    closeModals();
     resetUiForGame();
     hideTitle();
     gameActive = !state.ended;
     renderNode();
   }
-  function returnToTitle() {
-    try { localStorage.removeItem(KEY); } catch (e) {}
+  function returnToTitle(clearSave) {
+    if (clearSave) { try { localStorage.removeItem(KEY); } catch (e) {} }
     state = { node: 'start', hp: 0, route: null, ended: false, choosing: false, typing: false, transitioning: false };
     gameActive = false;
+    cancelAuto();
+    closeModals();
+    menuBtn.classList.remove('show');
     endingEl.classList.remove('show');
     stage.classList.remove('dark');
     hideSprites(); setNameplate('');
@@ -500,8 +667,193 @@ img{user-select:none}
   btnStart.addEventListener('click', newGame);
   btnReset.addEventListener('click', newGame);
   btnContinue.addEventListener('click', continueGame);
-  btnHome.addEventListener('click', returnToTitle);
+  btnHome.addEventListener('click', function () { returnToTitle(true); });
   btnAgain.addEventListener('click', newGame);
+
+  /* ================= 设置 / 自动 / 回看 / 存档槽 / 结局收集 ================= */
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
+  }
+  function pad2(n) { return ('0' + n).slice(-2); }
+  function saveSettings() {
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify({ v: 3, speed: settings.speed, autoDelay: settings.autoDelay, volume: settings.volume })); } catch (e) {}
+  }
+  function applySettingsToUI() {
+    if (selSpeed) selSpeed.value = settings.speed;
+    if (selAuto) selAuto.value = String(settings.autoDelay);
+    if (rngVolume) rngVolume.value = String(settings.volume);
+    applyVolume(); setAutoUI();
+  }
+  function setAutoUI() {
+    btnAuto.textContent = settings.auto ? '自动播放：开' : '自动播放：关';
+    menuBtn.classList.toggle('auto', !!settings.auto);
+  }
+  function cancelAuto() { if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; } }
+  function canAuto() {
+    return settings.auto && gameActive && !state.ended && !state.transitioning && !modalOpen && !state.typing && !state.choosing && cont.classList.contains('show');
+  }
+  function scheduleAuto() {
+    cancelAuto();
+    if (!settings.auto) return;
+    autoTimer = setTimeout(function () {
+      autoTimer = null;
+      if (!canAuto()) return;
+      advance();
+    }, Math.max(400, settings.autoDelay));
+  }
+  function toggleAuto() {
+    settings.auto = !settings.auto;
+    setAutoUI();
+    if (settings.auto) { scheduleAuto(); toast('自动播放已开启'); }
+    else { cancelAuto(); toast('自动播放已关闭'); }
+  }
+  function openModal(el, id) {
+    closeModals();
+    modalOpen = id;
+    if (el) el.classList.add('show');
+    cancelAuto();
+  }
+  function closeModals() {
+    modalOpen = null;
+    var list = [menuModal, historyModal, slotModal, endingsModal];
+    for (var i = 0; i < list.length; i++) if (list[i]) list[i].classList.remove('show');
+    if (gameActive && !state.ended) scheduleAuto();
+  }
+  function openMenu() { if (!gameActive || state.ended) return; openModal(menuModal, 'menu'); }
+  function renderHistory() {
+    histList.textContent = '';
+    if (!history.length) {
+      var d = document.createElement('div'); d.className = 'hist-empty'; d.textContent = '还没有回看记录。'; histList.appendChild(d); return;
+    }
+    for (var i = 0; i < history.length; i++) {
+      var h = history[i];
+      var row = document.createElement('div'); row.className = 'hist-line';
+      var b = document.createElement('b'); b.textContent = h.who || '旁白'; row.appendChild(b);
+      var p = document.createElement('p'); p.textContent = h.text; row.appendChild(p);
+      histList.appendChild(row);
+    }
+  }
+  function openHistory() { renderHistory(); openModal(historyModal, 'history'); setTimeout(function () { histList.scrollTop = histList.scrollHeight; }, 30); }
+  function formatTs(ts) {
+    try { var d = new Date(ts); return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()); } catch (e) { return ''; }
+  }
+  function slotKey(i) { return SLOT_PREFIX + i; }
+  function getSlot(i) {
+    try {
+      var s = JSON.parse(localStorage.getItem(slotKey(i)) || 'null');
+      if (s && s.v === 3 && s.node && (s.node === '__ending__' || MAP[s.node])) return s;
+    } catch (e) {}
+    return null;
+  }
+  function hasAnySlot() { return !!(getSlot(0) || getSlot(1) || getSlot(2)); }
+  function nodeLabel(nodeId) {
+    var n = MAP[nodeId];
+    if (!n || !n.text) return '未知进度';
+    var s = n.text.split(String.fromCharCode(10)).join(' ');
+    return s.length > 22 ? s.slice(0, 22) + '…' : s;
+  }
+  function saveToSlot(i) {
+    if (!gameActive || state.ended) { toast('当前不可存档'); return; }
+    var data = { v: 3, node: state.node, hp: state.hp, route: state.route, ts: Date.now(), label: nodeLabel(state.node) };
+    try { localStorage.setItem(slotKey(i), JSON.stringify(data)); toast('已存入第 ' + (i + 1) + ' 槽'); }
+    catch (e) { toast('存档失败'); }
+    renderSlots('save');
+    updateTitleButtons();
+  }
+  function loadFromSlot(i) {
+    var sv = getSlot(i);
+    if (!sv) { toast('该槽为空'); return; }
+    state = { node: sv.node, hp: sv.hp || 0, route: sv.route || null, ended: false, choosing: false, typing: false, transitioning: false };
+    history = [];
+    resetUiForGame();
+    hideTitle();
+    gameActive = true;
+    closeModals();
+    renderNode();
+    toast('已读取第 ' + (i + 1) + ' 槽');
+  }
+  function renderSlots(mode) {
+    slotTitle.textContent = mode === 'save' ? '存 档' : '读 档';
+    slotList.textContent = '';
+    for (var i = 0; i < 3; i++) {
+      (function (idx) {
+        var sv = getSlot(idx);
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'slot' + (sv ? '' : ' empty');
+        var t1 = document.createElement('b');
+        t1.textContent = '第 ' + (idx + 1) + ' 槽' + (sv ? '' : ' · 空');
+        b.appendChild(t1);
+        var t2 = document.createElement('span');
+        if (sv) t2.textContent = sv.label + String.fromCharCode(10) + '好感 ' + (sv.hp || 0) + ' · ' + formatTs(sv.ts) + ' · 点击' + (mode === 'save' ? '覆盖存档' : '读取');
+        else t2.textContent = mode === 'save' ? '点击存入当前进度' : '（空存档）';
+        b.appendChild(t2);
+        b.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          if (mode === 'save') saveToSlot(idx); else loadFromSlot(idx);
+        });
+        slotList.appendChild(b);
+      })(i);
+    }
+  }
+  function openSlotModal(mode) { renderSlots(mode); openModal(slotModal, 'slot'); }
+  function unlockEnding(key) {
+    if (!key) return;
+    if (!unlocked[key]) { unlocked[key] = true; try { localStorage.setItem(ENDINGS_KEY, JSON.stringify(unlocked)); } catch (e) {} }
+  }
+  function countUnlocked() {
+    var n = 0;
+    for (var k in ENDINGS) if (Object.prototype.hasOwnProperty.call(ENDINGS, k) && unlocked[k]) n++;
+    return n;
+  }
+  function updateCollectCounts() {
+    var n = countUnlocked(), txt = '结局收集 ' + n + '/5';
+    if (btnEndings) btnEndings.textContent = txt;
+    if (btnEndingsTitle) btnEndingsTitle.textContent = txt;
+    if (endCollectCount) endCollectCount.textContent = n + '/5';
+  }
+  function renderEndingsList() {
+    endingsList.textContent = '';
+    var order = ['he_own', 'he_talk', 'ne_gray', 'ne_miss', 'be_cage'];
+    for (var i = 0; i < order.length; i++) {
+      (function (key) {
+        var e = ENDINGS[key];
+        var row = document.createElement('div');
+        row.className = 'slot' + (unlocked[key] ? '' : ' empty');
+        var t1 = document.createElement('b');
+        t1.textContent = unlocked[key] ? (e.tag + ' · ' + e.title) : '？？？ · 未解锁';
+        row.appendChild(t1);
+        var t2 = document.createElement('span');
+        t2.textContent = unlocked[key] ? (e.text || '') : '在剧情中做出相应选择即可解锁。';
+        row.appendChild(t2);
+        endingsList.appendChild(row);
+      })(order[i]);
+    }
+  }
+  function openEndingsModal() { renderEndingsList(); openModal(endingsModal, 'endings'); }
+
+  menuBtn.addEventListener('click', function (ev) { ev.stopPropagation(); openMenu(); });
+  btnCloseMenu.addEventListener('click', closeModals);
+  btnCloseHistory.addEventListener('click', closeModals);
+  btnCloseSlot.addEventListener('click', closeModals);
+  btnCloseEndings.addEventListener('click', closeModals);
+  btnAuto.addEventListener('click', function () { toggleAuto(); });
+  btnHistory.addEventListener('click', function () { openHistory(); });
+  btnSaveSlot.addEventListener('click', function () { openSlotModal('save'); });
+  btnLoadSlot.addEventListener('click', function () { openSlotModal('load'); });
+  btnEndings.addEventListener('click', openEndingsModal);
+  btnMenuTitle.addEventListener('click', function () { closeModals(); returnToTitle(false); });
+  btnLoadTitle.addEventListener('click', function () { openSlotModal('load'); });
+  btnEndingsTitle.addEventListener('click', openEndingsModal);
+  selSpeed.addEventListener('change', function () { settings.speed = selSpeed.value; saveSettings(); toast('文字速度：' + selSpeed.options[selSpeed.selectedIndex].text); });
+  selAuto.addEventListener('change', function () { settings.autoDelay = parseInt(selAuto.value, 10) || 2200; saveSettings(); toast('自动间隔已更新'); if (settings.auto) scheduleAuto(); });
+  rngVolume.addEventListener('input', function () { settings.volume = parseInt(rngVolume.value, 10) || 0; applyVolume(); });
+  rngVolume.addEventListener('change', function () { saveSettings(); });
+  [menuModal, historyModal, slotModal, endingsModal].forEach(function (m) {
+    m.addEventListener('click', function (ev) { if (ev.target === m) closeModals(); });
+  });
 
   /* ================= 启动 ================= */
   (function boot() {
@@ -511,7 +863,24 @@ img{user-select:none}
       return;
     }
     try { soundOn = localStorage.getItem(SKEY) === '1'; } catch (e) {}
+    try {
+      var stg = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null');
+      if (stg && stg.v === 3) {
+        settings.speed = stg.speed || 'normal';
+        settings.autoDelay = stg.autoDelay || 2200;
+        settings.volume = (typeof stg.volume === 'number') ? stg.volume : 70;
+      }
+    } catch (e) {}
+    try { unlocked = JSON.parse(localStorage.getItem(ENDINGS_KEY) || '{}') || {}; } catch (e) { unlocked = {}; }
+    try {
+      if (!localStorage.getItem(KEY)) {
+        var oldSave = JSON.parse(localStorage.getItem('lune_galgame_v2_save') || 'null');
+        if (oldSave && oldSave.v === 2) { oldSave.v = 3; localStorage.setItem(KEY, JSON.stringify(oldSave)); }
+      }
+    } catch (e) {}
     updateSoundUI();
+    applySettingsToUI();
+    updateCollectCounts();
     updateTitleButtons();
     setScene(0);
     // 首次交互时恢复音效
@@ -524,6 +893,9 @@ img{user-select:none}
     // 暴露给自动化测试/调试
     window.LUNE_DEBUG = {
       getState: function () { return state; },
+      getSettings: function () { return settings; },
+      getUnlocked: function () { return unlocked; },
+      getHistory: function () { return history; },
       story: STORY, endings: ENDINGS, map: MAP
     };
   })();
